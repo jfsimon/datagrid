@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Service;
 
 use Jfsimon\Datagrid\Model\Component\Cell\CellInterface;
+use Jfsimon\Datagrid\Model\Data\Entity;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -20,24 +21,24 @@ interface HandlerInterface
     public function configure(OptionsResolver $resolver);
 
     /**
-     * Returns true if supports given data.
+     * Returns true if supports given entity.
      *
-     * @param mixed $data
+     * @param Entity $entity
      *
      * @return boolean
      */
-    public function supports($data);
+    public function supports(Entity $entity);
 
     /**
-     * Generates a cell with given data & options.
+     * Generates a cell with given entity, column name & options.
      *
-     * @param mixed  $data    The data row
-     * @param string $name    The column name
+     * @param Entity $entity
+     * @param string $name
      * @param array  $options
      *
      * @return CellInterface
      */
-    public function handle($data, $name, array $options);
+    public function handle(Entity $entity, $name, array $options);
 
     /**
      * Returns supported row type.

@@ -4,6 +4,7 @@ namespace Jfsimon\Datagrid\Model;
 
 use Jfsimon\Datagrid\Model\Component\Cell\EmptyCell;
 use Jfsimon\Datagrid\Model\Component\Row;
+use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -75,21 +76,21 @@ class Column
     }
 
     /**
-     * @param Row   $row
-     * @param mixed $data
+     * @param Row    $row
+     * @param Entity $entity
      *
      * @return Column
      *
      * @throws \LogicException
      */
-    public function build(Row $row, $data)
+    public function build(Row $row, Entity $entity)
     {
         if (null === $this->options) {
             throw new \LogicException('Column must be configured before handling.');
         }
 
-        $handler = $this->getHandler($data, $row->getType());
-        $cell = $handler ? $handler->handle($data, $this->name, $this->options) : new EmptyCell();
+        $handler = $this->getHandler($entity, $row->getType());
+        $cell = $handler ? $handler->handle($entity, $this->name, $this->options) : new EmptyCell();
         $row->addCell($this->name, $cell);
 
         return $this;

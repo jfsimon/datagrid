@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Model;
 
 use Jfsimon\Datagrid\Model\Component\Row;
+use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Jfsimon\Datagrid\Service\RegistryInterface;
 
@@ -68,15 +69,15 @@ class Schema
     }
 
     /**
-     * @param Row   $row
-     * @param mixed $data
+     * @param Row    $row
+     * @param Entity $entity
      *
      * @return Schema
      */
-    public function build(Row $row, $data)
+    public function build(Row $row, Entity $entity)
     {
         foreach ($this->getColumns() as $column) {
-            $column->build($row, $data);
+            $column->build($row, $entity);
         }
 
         return $this;

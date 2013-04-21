@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Service;
 
 use Jfsimon\Datagrid\Model\Component\Grid;
+use Jfsimon\Datagrid\Model\Data\Collection;
 
 /**
  * Grid factory service interface.
@@ -21,12 +22,12 @@ interface FactoryInterface
     public function register(ExtensionInterface $extension);
 
     /**
-     * Creates a grid from data.
+     * Creates a grid from data collection.
      *
-     * @param mixed $dataset
-     * @param array $options
+     * @param Collection $collection
+     * @param array      $options
      *
      * @return Grid
      */
-    public function create($dataset, array $options = array());
+    public function create(Collection $collection, array $options = array());
 }
