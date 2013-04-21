@@ -15,7 +15,7 @@ Work in progress
 
 - [x] Implement an AST with visitor capability
 - [x] Implement an easy way to build datagrid
-- [ ] Implement Twig & PHP renderer
+- [x] Implement Twig renderer
 - [ ] Implement standard data formatters
 - [ ] Write some tests
 - [ ] Implement a labels extension
@@ -42,7 +42,7 @@ $collection = new Collection(array(
 
 echo $factory
     ->create($collection, array('schema' => $schema)
-    ->render(new TwigRenderer($twig, 'my/template.html.twig');
+    ->render(new TwigRenderer($twig, 'my/template.html.twig'));
 ```
 
 Usage with Doctrine
@@ -55,5 +55,5 @@ $factory = new DoctrineFactory($em);
 
 echo $factory
     ->create(new Collection($em->findAll('My:Article')))
-    ->render(new TwigRenderer($twig, 'my/template.html.twig');
+    ->render(new TwigRenderer($twig, 'my/template.html.twig'));
 ```

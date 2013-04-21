@@ -21,15 +21,6 @@ interface HandlerInterface
     public function configure(OptionsResolver $resolver);
 
     /**
-     * Returns true if supports given entity.
-     *
-     * @param Entity $entity
-     *
-     * @return boolean
-     */
-    public function supports(Entity $entity);
-
-    /**
      * Generates a cell with given entity, column name & options.
      *
      * @param Entity $entity

@@ -51,7 +51,7 @@ class Column
             throw new \LogicException('Column is configured and cannot accept new handlers.');
         }
 
-        $this->handlers[] = $handler;
+        $this->handlers[$handler->getType()] = $handler;
 
         return $this;
     }
@@ -89,27 +89,12 @@ class Column
             throw new \LogicException('Column must be configured before handling.');
         }
 
-        $handler = $this->getHandler($entity, $row->getType());
-        $cell = $handler ? $handler->handle($entity, $this->name, $this->options) : new EmptyCell();
-        $row->addCell($this->name, $cell);
+        $cell = isset($this->handlers[$row->getType()])
+            ? $this->handlers[$row->getType()]->handle($entity, $this->name, $this->options)
+            : new EmptyCell();
+
+        $row->add($this->name, $cell);
 
         return $this;
-    }
-
-    /**
-     * @param mixed  $data
-     * @param string $type
-     *
-     * @return HandlerInterface|null
-     */
-    private function getHandler($data, $type)
-    {
-        foreach ($this->handlers as $handler) {
-            if ($type === $handler->getType() && $handler->supports($data)) {
-                return $handler;
-            }
-        }
-
-        return null;
     }
 }
