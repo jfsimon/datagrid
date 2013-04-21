@@ -27,15 +27,21 @@ class Entity
     private $mapping;
 
     /**
+     * @var string|null
+     */
+    private $idPath;
+
+    /**
      * Constructor.
      *
      * @param array|object              $data
      * @param PropertyAccessorInterface $accessor
      * @param array                     $mapping
+     * @param string|null               $idPath
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($data, PropertyAccessorInterface $accessor, array $mapping = array())
+    public function __construct($data, PropertyAccessorInterface $accessor, array $mapping = array(), $idPath = null)
     {
         if (!is_array($data) && !is_object($data)) {
            throw new \InvalidArgumentException('Entity data must be array or object.');
@@ -56,6 +62,14 @@ class Entity
         $path = isset($this->mapping[$name]) ? $this->mapping[$name] : $name;
 
         return $this->accessor->getValue($this->data, $path);
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getId()
+    {
+        return $this->idPath ? $this->get($this->idPath) : null;
     }
 
     /**

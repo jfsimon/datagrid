@@ -86,7 +86,8 @@ abstract class AbstractComponent implements ComponentInterface
                 $this->getRendererContext(array_replace($this->getDefaultOptions(), $options)),
                 array('name' => $this->name, 'attributes' => $this->attributes),
                 $this->vars
-            )
+            ),
+            $options
         );
     }
 

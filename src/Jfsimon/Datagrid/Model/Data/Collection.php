@@ -41,6 +41,7 @@ class Collection
      *
      * Valid options are:
      * * mapping: an associative array of filed name => property path
+     * * id_path: path of the ID field
      *
      * @param array|\Traversable $data
      * @param array              $options
@@ -68,7 +69,7 @@ class Collection
             throw new \InvalidArgumentException('Collection data must be traversable or array');
         }
 
-        $this->options = array_merge(array('mapping' => array()), $options);
+        $this->options = array_merge(array('mapping' => array(), 'id_path' => null), $options);
         $this->accessor = PropertyAccess::getPropertyAccessor();
         $this->data->rewind();
     }
@@ -93,7 +94,7 @@ class Collection
             return null;
         }
 
-        return new Entity($item, $this->accessor, $this->options['mapping']);
+        return new Entity($item, $this->accessor, $this->options['mapping'], $this->options['id_path']);
     }
 
     /**

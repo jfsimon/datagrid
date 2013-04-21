@@ -17,20 +17,26 @@ class Grid extends AbstractComponent
     /**
      * Constructor.
      *
-     * @param Section     $head
-     * @param Section     $body
-     * @param Section     $foot
-     * @param string      $name
-     * @param null|string $caption
+     * @param null|Section $head
+     * @param null|Section $body
+     * @param null|Section $foot
+     * @param string       $name
+     * @param null|string  $caption
      */
-    public function __construct(Section $head, Section $body, Section $foot, $name = 'default', $caption = null)
+    public function __construct(Section $head = null, Section $body = null, Section $foot = null, $name = 'default', $caption = null)
     {
         parent::__construct();
+
+        $head = $head ?: new Section();
+        $body = $body ?: new Section();
+        $foot = $foot ?: new Section();
+
         $this->children = array(
             'head' => $head->bind($this, 'head'),
             'body' => $body->bind($this, 'body'),
             'foot' => $foot->bind($this, 'foot'),
         );
+
         $this->name = $name;
         $this->caption = $caption;
         $this->columns = array();

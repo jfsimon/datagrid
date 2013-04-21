@@ -24,6 +24,9 @@ interface FactoryInterface
     /**
      * Creates a grid from data collection.
      *
+     * Valid options are:
+     * * schema: the schema used to setup the grid
+     *
      * @param Collection $collection
      * @param array      $options
      *
