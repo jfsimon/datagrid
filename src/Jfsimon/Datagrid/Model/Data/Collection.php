@@ -6,7 +6,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
- * Data collection.
+ * Homogeneous data collection.
  *
  * @author Jean-François Simon <contact@jfsimon.fr>
  */
@@ -32,6 +32,11 @@ class Collection
     private $accessor;
 
     /**
+     * @var null|Entity
+     */
+    private $peek;
+
+    /**
      * Constructor.
      *
      * Valid options are:
@@ -39,6 +44,7 @@ class Collection
      *
      * @param array|\Traversable $data
      * @param array              $options
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct($data, array $options = array())
@@ -64,15 +70,23 @@ class Collection
 
         $this->options = array_merge(array('mapping' => array()), $options);
         $this->accessor = PropertyAccess::getPropertyAccessor();
+        $this->data->rewind();
     }
 
     /**
-     * Returns next row.
+     * Returns next entity.
      *
      * @return Entity|null
      */
     public function next()
     {
+        if (null !== $this->peek) {
+            $entity = $this->peek;
+            $this->peek = null;
+
+            return $entity;
+        }
+
         $item = $this->data->current();
 
         if (false === $item) {
@@ -80,6 +94,24 @@ class Collection
         }
 
         return new Entity($item, $this->accessor, $this->options['mapping']);
+    }
+
+    /**
+     * Rewinds iterator.
+     */
+    public function rewind()
+    {
+        $this->data->rewind();
+    }
+
+    /**
+     * Returns collection length.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return $this->data->count();
     }
 
     /**
@@ -98,5 +130,17 @@ class Collection
         }
 
         throw new \LogicException('Invalid data.');
+    }
+
+    /**
+     * Peeks next entity.
+     *
+     * @return Entity|null
+     */
+    public function getPeek()
+    {
+        $this->peek = $this->next();
+
+        return $this->peek;
     }
 }

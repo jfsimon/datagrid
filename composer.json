@@ -1,0 +1,15 @@
+{
+    "name": "jfsimon/datagrid",
+    "description": "A PHP datagrid component",
+    "require": {
+        "symfony/options-resolver": "2.3.x-dev",
+        "symfony/property-access": "2.3.x-dev",
+        "symfony/form": "2.3.x-dev"
+    },
+    "authors": [
+        {
+            "name": "Jean-François Simon",
+            "email": "contact@jfsimon.fr"
+        }
+    ]
+}
