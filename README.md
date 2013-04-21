@@ -14,7 +14,7 @@ Work in progress
 ----------------
 
 - [x] Implement an AST with visitor capability
-- [ ] Implement an easy way to build datagrid
+- [x] Implement an easy way to build datagrid
 - [ ] Implement Twig & PHP renderer
 - [ ] Implement standard data formatters
 - [ ] Write some tests
@@ -28,7 +28,9 @@ Usage with custom data
 **This is not working yet, don't try this at home.**
 
 ```php
-$schema = Schema::create(new CoreRegistry())
+$factory = new Factory();
+
+$schema = Schema::create($factory->createRegistry())
     ->add('title', 'string')
     ->add('publishedAt', 'datetime', array('format' => 'd/m/Y'))
     ->add('comments', 'count');
@@ -37,8 +39,6 @@ $collection = new Collection(array(
     array('title' => 'hello world!', 'publishedAt' => new \DateTime(), 'comments' => array('great')),
     array('title' => 'I\'m tired', 'publishedAt' => new \DateTime(), 'comments' => array()),
 ));
-
-$factory = new Factory();
 
 echo $factory
     ->create($collection, array('schema' => $schema)

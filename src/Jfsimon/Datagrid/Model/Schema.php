@@ -33,11 +33,17 @@ class Schema
     private $cache;
 
     /**
+     * Creates a schema.
+     *
      * @param RegistryInterface $registry
+     *
+     * @return Schema
      */
-    public function __construct(RegistryInterface $registry)
+    public static function create(RegistryInterface $registry)
     {
-        $this->registry = $registry;
+        $schema = new self();
+
+        return $schema->setRegistry($registry);
     }
 
     /**
@@ -64,6 +70,18 @@ class Schema
     {
         $this->handlers[] = $handler;
         $this->cache = null;
+
+        return $this;
+    }
+
+    /**
+     * @param RegistryInterface $registry
+     *
+     * @return Schema
+     */
+    public function setRegistry(RegistryInterface $registry)
+    {
+        $this->registry = $registry;
 
         return $this;
     }

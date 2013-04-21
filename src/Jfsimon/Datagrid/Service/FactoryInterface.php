@@ -32,5 +32,12 @@ interface FactoryInterface
      *
      * @return Grid
      */
-    public function create(Collection $collection, array $options = array());
+    public function createGrid(Collection $collection, array $options = array());
+
+    /**
+     * Creates an extension registry.
+     *
+     * @return RegistryInterface
+     */
+    public function createRegistry();
 }
