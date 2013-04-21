@@ -1,0 +1,75 @@
+{% block grid %}
+{% spaceless %}
+    <table {{ block(attributes) }}>
+        {{ head ? datagrid(head, options) : '' }}
+        {{ body ? datagrid(body, options) : '' }}
+        {{ foot ? datagrid(foot, options) : '' }}
+    </table>
+{% endspaceless %}
+{% endblock grid %}
+
+{% block headSection %}
+{% spaceless %}
+    <thead{{ block(attributes) }}>
+        {{ block(rows) }}
+    </thead>
+{% endspaceless %}
+{% endblock headSection %}
+
+{% block bodySection %}
+{% spaceless %}
+    <tbody{{ block(attributes) }}>
+        {{ block(rows) }}
+    </tbody>
+{% endspaceless %}
+{% endblock bodySection %}
+
+{% block footSection %}
+{% spaceless %}
+    <tfoot{{ block(attributes) }}>
+        {{ block(rows) }}
+    </tfoot>
+{% endspaceless %}
+{% endblock footSection %}
+
+{% block rows %}
+{% spaceless %}
+    {% for row in rows %}
+        {{ datagrid(row, options) }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock rows %}
+
+{% block row %}
+{% spaceless %}
+    <tr{{ block(attributes) }}>
+        {% for cell in cells %}
+            {{ datagrid(cell, options) }}
+        {% endfor %}
+    </tr>
+{% endspaceless %}
+{% endblock row %}
+
+{% block cell %}
+{% spaceless %}
+    {% if heading %}
+        <th{{ block(attributes) }}>{{ content }}</th>
+    {% else %}
+        <td{{ block(attributes) }}>{{ content }}</td>
+    {% endif %}
+{% endspaceless %}
+{% endblock cell %}
+
+{% block emptyCell %}
+{% spaceless %}
+    <td{{ block(attributes) }}></td>
+{% endspaceless %}
+{% endblock emptyCell %}
+
+{% block attributes %}
+{% spaceless %}
+    {% for name, value in attributes.all() %}
+        {{ ' ' ~ name ~ '="' ~ value ~ '"' }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock attributes %}

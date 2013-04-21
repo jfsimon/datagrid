@@ -80,15 +80,16 @@ abstract class AbstractComponent implements ComponentInterface
             throw new \LogicException('Component must be bound before rendering.');
         }
 
-        return $renderer->render(
-            isset($options['template']) ? array($options['template']) : $this->getRendererTemplates(),
-            array_merge(
-                $this->getRendererContext(array_replace($this->getDefaultOptions(), $options)),
-                array('name' => $this->name, 'attributes' => $this->attributes),
-                $this->vars
-            ),
-            $options
+        $templates = isset($options['template']) ? array($options['template']) : $this->getRendererTemplates();
+        unset($options['template']);
+
+        $context = array_merge(
+            $this->getRendererContext(array_replace($this->getDefaultOptions(), $options)),
+            array('name' => $this->name, 'attributes' => $this->attributes, 'options' => $options),
+            $this->vars
         );
+
+        return $renderer->render($templates, $context, $options);
     }
 
     /**
