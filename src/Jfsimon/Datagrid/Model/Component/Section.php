@@ -23,19 +23,19 @@ class Section extends AbstractComponent
     {
         parent::__construct();
         foreach ($rows as $name => $row) {
-            $this->addRow($name, $row);
+            $this->add($name, $row);
         }
     }
 
     /**
-     * Registers a row.
+     * Adds a row.
      *
      * @param string $name
      * @param Row    $row
      *
      * @return Section
      */
-    public function addRow($name, Row $row)
+    public function add($name, Row $row)
     {
         $this->children[$name] = $row->bind($this, $name);
 

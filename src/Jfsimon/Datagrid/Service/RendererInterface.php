@@ -3,7 +3,7 @@
 namespace Jfsimon\Datagrid\Service;
 
 /**
- * Component renderer interface.
+ * Component renderer service interface.
  *
  * @author Jean-François Simon <contact@jfsimon.fr>
  */

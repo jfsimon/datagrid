@@ -17,23 +17,47 @@ class Grid extends AbstractComponent
     /**
      * Constructor.
      *
-     * @param Section     $header
+     * @param Section     $head
      * @param Section     $body
-     * @param Section     $footer
+     * @param Section     $foot
      * @param string      $name
      * @param null|string $caption
      */
-    public function __construct(Section $header, Section $body, Section $footer, $name = 'default', $caption = null)
+    public function __construct(Section $head, Section $body, Section $foot, $name = 'default', $caption = null)
     {
         parent::__construct();
         $this->children = array(
-            'header' => $header->bind($this, 'header'),
-            'body'   => $body->bind($this, 'body'),
-            'footer' => $footer->bind($this, 'footer'),
+            'head' => $head->bind($this, 'head'),
+            'body' => $body->bind($this, 'body'),
+            'foot' => $foot->bind($this, 'foot'),
         );
         $this->name = $name;
         $this->caption = $caption;
         $this->columns = array();
+    }
+
+    /**
+     * @return Section
+     */
+    public function getHead()
+    {
+        return $this->children['head'];
+    }
+
+    /**
+     * @return Section
+     */
+    public function getBody()
+    {
+        return $this->children['body'];
+    }
+
+    /**
+     * @return Section
+     */
+    public function getFoot()
+    {
+        return $this->children['foot'];
     }
 
     /**
@@ -50,9 +74,9 @@ class Grid extends AbstractComponent
     protected function getRendererContext(array $options)
     {
         return array(
-            'header'  => $options['header'] ? $this->children['header'] : null,
+            'head'    => $options['head'] ? $this->children['head'] : null,
             'body'    => $this->children['body'],
-            'footer'  => $options['footer'] ? $this->children['footer'] : null,
+            'foot'    => $options['foot'] ? $this->children['foot'] : null,
             'caption' => $options['caption'] ? $this->caption : null,
         );
     }
@@ -63,9 +87,19 @@ class Grid extends AbstractComponent
     protected function getDefaultOptions()
     {
         return array(
-            'header'   => true,
-            'footer'   => true,
+            'head'     => true,
+            'foot'     => true,
             'caption'  => true,
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function removeChild($id)
+    {
+        $emptySection = new Section();
+        $emptySection->bind($this, $id);
+        $this->children[$id] = $emptySection;
     }
 }

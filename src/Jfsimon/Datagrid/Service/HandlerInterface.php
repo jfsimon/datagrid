@@ -6,6 +6,8 @@ use Jfsimon\Datagrid\Model\Component\Cell\CellInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
+ * Data handler service interface.
+ *
  * @author Jean-François Simon <contact@jfsimon.fr>
  */
 interface HandlerInterface
@@ -29,12 +31,13 @@ interface HandlerInterface
     /**
      * Generates a cell with given data & options.
      *
-     * @param mixed $data
-     * @param array $options
+     * @param mixed  $data    The data row
+     * @param string $name    The column name
+     * @param array  $options
      *
      * @return CellInterface
      */
-    public function handle($data, array $options);
+    public function handle($data, $name, array $options);
 
     /**
      * Returns supported row type.

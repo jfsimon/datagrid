@@ -6,6 +6,8 @@ use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Schema;
 
 /**
+ * Registry service interface.
+ *
  * @author Jean-François Simon <contact@jfsimon.fr>
  */
 interface RegistryInterface

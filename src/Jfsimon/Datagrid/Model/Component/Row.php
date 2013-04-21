@@ -32,19 +32,19 @@ class Row extends AbstractComponent
         parent::__construct();
         $this->type = $type;
         foreach ($cells as $name => $cell) {
-            $this->addCell($name, $cell);
+            $this->add($name, $cell);
         }
     }
 
     /**
-     * Registers a cell.
+     * Adds a cell.
      *
      * @param string        $name
      * @param CellInterface $cell
      *
      * @return Section
      */
-    public function addCell($name, CellInterface $cell)
+    public function add($name, CellInterface $cell)
     {
         $this->children[$name] = $cell->bind($this, $name);
 

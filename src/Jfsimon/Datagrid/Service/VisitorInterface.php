@@ -5,7 +5,7 @@ namespace Jfsimon\Datagrid\Service;
 use Jfsimon\Datagrid\Model\Component\ComponentInterface;
 
 /**
- * Component visitor interface.
+ * Components visitor service interface.
  *
  * @author Jean-François Simon <contact@jfsimon.fr>
  */

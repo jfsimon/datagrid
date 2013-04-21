@@ -94,26 +94,10 @@ class Schema
 
             foreach ($this->columns as $name => $bits) {
                 list($column, $options) = $bits;
+                $column = $this->resolveColumn($column)->configure($name, $options);
 
-                if (is_string($column)) {
-                    $column = $this->registry->getColumn($column);
-                }
-
-                if (!$column instanceof Column) {
-                    throw new \LogicException('A column must be string or instance of Column.');
-                }
-
-                $column->configure($name, $options);
                 foreach ($this->handlers as $handler) {
-                    if (is_string($handler)) {
-                        $handler = $this->registry->getHandler($handler);
-                    }
-
-                    if (!$handler instanceof HandlerInterface) {
-                        throw new \LogicException('A handler must be string or instance of HandlerInterface.');
-                    }
-
-                    $column->register($handler);
+                    $column->register($this->resolveHandler($handler));
                 }
 
                 $this->cache[] = $column;
@@ -121,5 +105,55 @@ class Schema
         }
 
         return $this->cache;
+    }
+
+    /**
+     * @param mixed $column
+     *
+     * @return Column
+     *
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
+     */
+    private function resolveColumn($column)
+    {
+        if (is_string($column)) {
+            if (null === $this->registry) {
+                throw new \LogicException('Registry must be set to resolve column by name.');
+            }
+
+            $column = $this->registry->getColumn($column);
+        }
+
+        if (!$column instanceof Column) {
+            throw new \InvalidArgumentException('A column must be string or instance of Column.');
+        }
+
+        return $column;
+    }
+
+    /**
+     * @param mixed $handler
+     *
+     * @return HandlerInterface
+     *
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
+     */
+    private function resolveHandler($handler)
+    {
+        if (is_string($handler)) {
+            if (null === $this->registry) {
+                throw new \LogicException('Registry must be set to resolve handler by name.');
+            }
+
+            $handler = $this->registry->getHandler($handler);
+        }
+
+        if (!$handler instanceof HandlerInterface) {
+            throw new \InvalidArgumentException('A handler must be string or instance of HandlerInterface.');
+        }
+
+        return $handler;
     }
 }

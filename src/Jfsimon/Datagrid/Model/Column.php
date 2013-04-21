@@ -89,7 +89,7 @@ class Column
         }
 
         $handler = $this->getHandler($data, $row->getType());
-        $cell = $handler ? $handler->handle($data, $this->options) : new EmptyCell();
+        $cell = $handler ? $handler->handle($data, $this->name, $this->options) : new EmptyCell();
         $row->addCell($this->name, $cell);
 
         return $this;
