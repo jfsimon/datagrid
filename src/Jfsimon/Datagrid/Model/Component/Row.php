@@ -76,6 +76,14 @@ class Row extends AbstractComponent
     }
 
     /**
+     * @return Section|null
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getRendererTemplates()

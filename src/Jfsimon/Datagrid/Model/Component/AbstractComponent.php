@@ -2,7 +2,6 @@
 
 namespace Jfsimon\Datagrid\Model\Component;
 
-use Jfsimon\Datagrid\Model\Attributes;
 use Jfsimon\Datagrid\Service\RendererInterface;
 use Jfsimon\Datagrid\Service\VisitorInterface;
 

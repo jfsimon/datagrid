@@ -59,6 +59,14 @@ class Section extends AbstractComponent
     }
 
     /**
+     * @return Grid|null
+     */
+    public function getGrid()
+    {
+        return $this->grid;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getRendererTemplates()

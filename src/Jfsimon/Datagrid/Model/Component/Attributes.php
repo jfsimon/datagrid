@@ -1,6 +1,6 @@
 <?php
 
-namespace Jfsimon\Datagrid\Model;
+namespace Jfsimon\Datagrid\Model\Component;
 
 /**
  * Component HTML attributes.

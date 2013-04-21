@@ -60,12 +60,6 @@
 {% endspaceless %}
 {% endblock cell %}
 
-{% block emptyCell %}
-{% spaceless %}
-    <td{{ block(attributes) }}></td>
-{% endspaceless %}
-{% endblock emptyCell %}
-
 {% block attributes %}
 {% spaceless %}
     {% for name, value in attributes.all() %}

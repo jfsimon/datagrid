@@ -2,7 +2,7 @@
 
 namespace Jfsimon\Datagrid\Model;
 
-use Jfsimon\Datagrid\Model\Component\Cell\EmptyCell;
+use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\HandlerInterface;
@@ -91,7 +91,7 @@ class Column
 
         $cell = isset($this->handlers[$row->getType()])
             ? $this->handlers[$row->getType()]->handle($entity, $this->name, $this->options)
-            : new EmptyCell();
+            : new Cell();
 
         $row->add($this->name, $cell);
 
