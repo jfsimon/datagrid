@@ -2,7 +2,7 @@
 
 namespace Jfsimon\Datagrid\Service;
 
-use Jfsimon\Datagrid\Model\Component\Cell\CellInterface;
+use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,7 +27,7 @@ interface HandlerInterface
      * @param string $name
      * @param array  $options
      *
-     * @return CellInterface
+     * @return Cell
      */
     public function handle(Entity $entity, $name, array $options);
 
