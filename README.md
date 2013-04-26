@@ -14,13 +14,20 @@ Work in progress
 ----------------
 
 - [x] Implement an AST with visitor capability
-- [x] Implement an easy way to build datagrid
+- [x] Implement an easy way to build data grids
 - [x] Implement Twig renderer
+- [ ] Add events with optional dispatcher
 - [ ] Implement standard data formatters
 - [ ] Write some tests
 - [ ] Implement a labels extension
+- [ ] Add sorting capability to labels
+- [ ] Implement a debug extension
 - [ ] Implement a Doctrine factory
 - [ ] Write more tests
+- [ ] Handle multi-columns/multi rows cells
+- [ ] Implement a filter extension
+- [ ] Manage data querying (sorting, filtering)
+- [ ] Think about grouping data rows
 
 Usage with custom data
 ----------------------
@@ -41,7 +48,7 @@ $collection = new Collection(array(
 ));
 
 echo $factory
-    ->create($collection, array('schema' => $schema)
+    ->createGrid($collection, array('schema' => $schema)
     ->render(new TwigRenderer($twig, 'my/template.html.twig'));
 ```
 
@@ -54,6 +61,6 @@ Usage with Doctrine
 $factory = new DoctrineFactory($em);
 
 echo $factory
-    ->create(new Collection($em->findAll('My:Article')))
+    ->createGrid(new Collection($em->findAll('My:Article')))
     ->render(new TwigRenderer($twig, 'my/template.html.twig'));
 ```
