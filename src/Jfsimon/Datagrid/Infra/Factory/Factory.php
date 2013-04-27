@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Factory;
 
 use Jfsimon\Datagrid\Infra\Extension\CoreExtension;
+use Jfsimon\Datagrid\Infra\Extension\Data\DataExtension;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Schema;
 use Jfsimon\Datagrid\Model\Component\Grid;
@@ -25,7 +26,10 @@ class Factory implements FactoryInterface
      */
     public function __construct()
     {
-        $this->register(new CoreExtension());
+        $this
+            ->register(new CoreExtension())
+            ->register(new DataExtension())
+        ;
     }
 
     /**

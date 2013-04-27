@@ -16,8 +16,9 @@ Work in progress
 - [x] Implement an AST with visitor capability
 - [x] Implement an easy way to build data grids
 - [x] Implement Twig renderer
-- [ ] Implement standard data formatters
+- [x] Implement standard data formatters
 - [ ] Write some tests
+- [ ] Improve exceptions (classes & messages)
 - [ ] Implement a labels extension
 - [ ] Add sorting capability to labels
 - [ ] Implement a debug extension
@@ -36,7 +37,7 @@ Usage with custom data
 ```php
 $factory = new Factory();
 
-$schema = Schema::create($factory->createRegistry())
+$schema = Schema::create($factory)
     ->add('title', 'string')
     ->add('publishedAt', 'datetime', array('format' => 'd/m/Y'))
     ->add('comments', 'count');

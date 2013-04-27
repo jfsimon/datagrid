@@ -29,6 +29,24 @@ class Schema
     private $factory;
 
     /**
+     * Creates a new instance.
+     *
+     * @param FactoryInterface $factory
+     *
+     * @return Schema
+     */
+    public static function create(FactoryInterface $factory = null)
+    {
+        $schema = new self();
+
+        if (null !== $factory) {
+            $schema->setFactory($factory);
+        }
+
+        return $schema;
+    }
+
+    /**
      * @param string        $name
      * @param string|Column $type
      * @param array         $options
