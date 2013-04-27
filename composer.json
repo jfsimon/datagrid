@@ -11,5 +11,8 @@
     }],
     "require-dev": {
         "twig/twig": "1.12.3"
+    },
+    "autoload": {
+        "psr-0": { "Jfsimon\\Datagrid": "src/" }
     }
 }

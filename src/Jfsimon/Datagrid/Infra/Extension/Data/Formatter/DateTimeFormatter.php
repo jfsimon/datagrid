@@ -27,7 +27,7 @@ class DateTimeFormatter implements FormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function format($value, array $options)
+    public function format($value, array $options = array())
     {
         if (null === $value) {
             return $options['null_value'];

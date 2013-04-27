@@ -16,8 +16,8 @@ class NumberFormatter implements FormatterInterface
     {
         $resolver->setDefaults(array(
             'null_value'    => '',
-            'precision'     => \IntlDateFormatter::MEDIUM,
-            'rounding_mode' => \IntlDateFormatter::SHORT,
+            'precision'     => null,
+            'rounding_mode' => null,
             'grouping'      => null,
         ));
     }
@@ -25,10 +25,10 @@ class NumberFormatter implements FormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function format($value, array $options)
+    public function format($value, array $options = array())
     {
         if (null === $value) {
-            return '';
+            return $options['null_value'];
         }
 
         if (!is_numeric($value)) {

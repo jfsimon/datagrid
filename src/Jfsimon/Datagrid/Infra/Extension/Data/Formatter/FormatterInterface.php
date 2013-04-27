@@ -24,7 +24,7 @@ interface FormatterInterface
      *
      * @return string
      */
-    public function format($value, array $options);
+    public function format($value, array $options = array());
 
     /**
      * Returns formatter name.

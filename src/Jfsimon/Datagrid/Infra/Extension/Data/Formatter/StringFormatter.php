@@ -22,9 +22,13 @@ class StringFormatter implements FormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function format($value, array $options)
+    public function format($value, array $options = array())
     {
-        return null === $value ? $options['null'] : (string) $value;
+        if (null === $value) {
+            return $options['null_value'];
+        }
+
+        return (string) $value;
     }
 
     /**

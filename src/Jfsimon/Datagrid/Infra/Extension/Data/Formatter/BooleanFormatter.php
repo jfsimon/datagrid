@@ -23,9 +23,9 @@ class BooleanFormatter implements FormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function format($value, array $options)
+    public function format($value, array $options = array())
     {
-        return $value ? $options['true'] : $options['false'];
+        return $value ? $options['true_value'] : $options['false_value'];
     }
 
     /**
