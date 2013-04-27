@@ -27,6 +27,7 @@ abstract class AbstractExtension implements ExtensionInterface
      */
     public function guessSchema(Entity $entity, array $options)
     {
+        return null;
     }
 
     /**

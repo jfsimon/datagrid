@@ -3,7 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Extension\Data;
 
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
-use Jfsimon\Datagrid\Infra\Extension\Data\Formatter\FormatterInterface;
+use Jfsimon\Datagrid\Infra\Extension\Data\Formatter;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
@@ -15,17 +15,32 @@ use Jfsimon\Datagrid\Model\Schema;
  */
 class DataExtension extends AbstractExtension
 {
+    const NAME = 'data';
+
     /**
-     * @var FormatterInterface[]
+     * @var Formatter\FormatterInterface[]
      */
     private $formatters;
 
     /**
-     * @param FormatterInterface $formatter
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->formatters = array(
+            new Formatter\BooleanFormatter(),
+            new Formatter\DateTimeFormatter(),
+            new Formatter\NumberFormatter(),
+            new Formatter\StringFormatter(),
+        );
+    }
+
+    /**
+     * @param Formatter\FormatterInterface $formatter
      *
      * @return DataExtension
      */
-    public function registerFormatter(FormatterInterface $formatter)
+    public function registerFormatter(Formatter\FormatterInterface $formatter)
     {
         $this->formatters[$formatter->getName()] = $formatter;
 
@@ -44,11 +59,9 @@ class DataExtension extends AbstractExtension
 
         $index = 0;
         while ($entity = $collection->next()) {
-            $schema->build($row = new Row('data'), $entity);
+            $schema->build($row = new Row(self::NAME), $entity);
             $grid->getBody()->add($entity->getId() ?: $index ++, $row);
         };
-
-        return $grid;
     }
 
     /**
@@ -61,5 +74,13 @@ class DataExtension extends AbstractExtension
         }
 
         $column->register(new DataHandler($this->formatters[$type]));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return self::NAME;
     }
 }

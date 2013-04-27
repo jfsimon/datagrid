@@ -100,6 +100,7 @@ class Schema
         }
 
         $this->columns = array();
+
         foreach ($this->types as $name => $bits) {
             list($type, $options) = $bits;
             $this->columns[$name] = $this->factory->createColumn($type, $options);

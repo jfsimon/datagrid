@@ -67,4 +67,11 @@ interface ExtensionInterface
      * @param array $options
      */
     public function visit(Grid $grid, array $options = array());
+
+    /**
+     * Returns extension name.
+     *
+     * @return string
+     */
+    public function getName();
 }

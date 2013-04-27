@@ -49,6 +49,6 @@ class DataHandler implements HandlerInterface
      */
     public function getType()
     {
-        return 'data';
+        return DataExtension::NAME;
     }
 }

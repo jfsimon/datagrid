@@ -29,4 +29,12 @@ class CoreExtension extends AbstractExtension
     {
         return isset($options['schema']) ? $options['schema'] : null;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'core';
+    }
 }

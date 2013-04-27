@@ -37,8 +37,8 @@ class Factory implements FactoryInterface
      */
     public function register(ExtensionInterface $extension)
     {
-        // todo: extension order may matter
-        $this->extensions[] = $extension;
+        // todo: maybe add a priority system
+        $this->extensions[$extension->getName()] = $extension;
 
         return $this;
     }
