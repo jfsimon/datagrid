@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Service;
 
+use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
 
@@ -22,7 +23,17 @@ interface FactoryInterface
     public function register(ExtensionInterface $extension);
 
     /**
-     * Creates a grid from data collection.
+     * Creates a column for given type & options.
+     *
+     * @param string $type
+     * @param array  $options
+     *
+     * @return Column
+     */
+    public function createColumn($type, array $options = array());
+
+    /**
+     * Creates a grid for given data collection & options.
      *
      * Valid options are:
      * * schema: the schema used to setup the grid
@@ -33,11 +44,4 @@ interface FactoryInterface
      * @return Grid
      */
     public function createGrid(Collection $collection, array $options = array());
-
-    /**
-     * Creates an extension registry.
-     *
-     * @return RegistryInterface
-     */
-    public function createRegistry();
 }

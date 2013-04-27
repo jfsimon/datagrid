@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Infra\Extension;
 
+use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Data\Entity;
@@ -38,6 +39,13 @@ abstract class AbstractExtension implements ExtensionInterface
     /**
      * {@inheritdoc}
      */
+    public function buildColumn(Column $column, $type, array $options = array())
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function buildGrid(Grid $grid, Collection $collection, array $options = array())
     {
     }
@@ -47,29 +55,5 @@ abstract class AbstractExtension implements ExtensionInterface
      */
     public function visit(Grid $grid, array $options = array())
     {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getColumns()
-    {
-        return array();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getHandlers()
-    {
-        return array();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getVisitors()
-    {
-        return array();
     }
 }

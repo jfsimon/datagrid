@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Service;
 
+use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Data\Entity;
@@ -33,6 +34,15 @@ interface ExtensionInterface
     public function guessSchema(Entity $entity, array $options);
 
     /**
+     * Builds a column.
+     *
+     * @param Column $column
+     * @param string $type
+     * @param array  $options
+     */
+    public function buildColumn(Column $column, $type, array $options = array());
+
+    /**
      * Builds columns schema.
      *
      * @param Schema     $schema
@@ -57,25 +67,4 @@ interface ExtensionInterface
      * @param array $options
      */
     public function visit(Grid $grid, array $options = array());
-
-    /**
-     * Returns named columns.
-     *
-     * @param Column[]
-     */
-    public function getColumns();
-
-    /**
-     * Returns named handlers.
-     *
-     * @return HandlerInterface[]
-     */
-    public function getHandlers();
-
-    /**
-     * Returns named components visitors.
-     *
-     * @return VisitorInterface[]
-     */
-    public function getVisitors();
 }

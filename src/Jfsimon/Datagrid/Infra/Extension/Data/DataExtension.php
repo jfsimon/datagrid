@@ -3,6 +3,8 @@
 namespace Jfsimon\Datagrid\Infra\Extension\Data;
 
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
+use Jfsimon\Datagrid\Infra\Extension\Data\Formatter\FormatterInterface;
+use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Collection;
@@ -13,6 +15,23 @@ use Jfsimon\Datagrid\Model\Schema;
  */
 class DataExtension extends AbstractExtension
 {
+    /**
+     * @var FormatterInterface[]
+     */
+    private $formatters;
+
+    /**
+     * @param FormatterInterface $formatter
+     *
+     * @return DataExtension
+     */
+    public function registerFormatter(FormatterInterface $formatter)
+    {
+        $this->formatters[$formatter->getName()] = $formatter;
+
+        return $this;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -30,5 +49,17 @@ class DataExtension extends AbstractExtension
         };
 
         return $grid;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildColumn(Column $column, $type, array $options = array())
+    {
+        if (!isset($this->formatters[$type])) {
+            throw new \LogicException('No formatter found for given type.');
+        }
+
+        $column->register(new DataHandler($this->formatters[$type]));
     }
 }

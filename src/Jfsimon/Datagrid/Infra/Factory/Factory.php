@@ -3,7 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Factory;
 
 use Jfsimon\Datagrid\Infra\Extension\CoreExtension;
-use Jfsimon\Datagrid\Infra\Registry\ExtensionRegistry;
+use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Schema;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
@@ -60,6 +60,7 @@ class Factory implements FactoryInterface
             $extension->buildSchema($options['schema'], $collection, $options);
         }
 
+        $options['schema']->setFactory($this);
         $grid = new Grid();
 
         foreach ($this->extensions as $extension) {
@@ -76,8 +77,14 @@ class Factory implements FactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createRegistry()
+    public function createColumn($type, array $options = array())
     {
-        return new ExtensionRegistry($this->extensions);
+        $column = new Column();
+
+        foreach ($this->extensions as $extension) {
+            $extension->buildColumn($column, $type, $options);
+        }
+
+        return $column;
     }
 }

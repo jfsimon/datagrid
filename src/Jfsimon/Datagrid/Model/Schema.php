@@ -4,6 +4,7 @@ namespace Jfsimon\Datagrid\Model;
 
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Entity;
+use Jfsimon\Datagrid\Service\FactoryInterface;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Jfsimon\Datagrid\Service\RegistryInterface;
 
@@ -13,75 +14,43 @@ use Jfsimon\Datagrid\Service\RegistryInterface;
 class Schema
 {
     /**
-     * @var \Jfsimon\Datagrid\Service\RegistryInterface
+     * @var array
      */
-    private $registry;
+    private $types = array();
 
     /**
-     * @var array
+     * @var Column[]|null
      */
     private $columns;
 
     /**
-     * @var array
+     * @var FactoryInterface
      */
-    private $handlers;
-
-    /**
-     * @var null|array
-     */
-    private $cache;
-
-    /**
-     * Creates a schema.
-     *
-     * @param RegistryInterface $registry
-     *
-     * @return Schema
-     */
-    public static function create(RegistryInterface $registry)
-    {
-        $schema = new self();
-
-        return $schema->setRegistry($registry);
-    }
+    private $factory;
 
     /**
      * @param string        $name
-     * @param string|Column $column
+     * @param string|Column $type
      * @param array         $options
      *
      * @return Schema
      */
-    public function add($name, $column, array $options = array())
+    public function add($name, $type, array $options = array())
     {
-        $this->columns[$name] = array($column, $options);
-        $this->cache = null;
+        $this->types[$name] = array($type, $options);
+        $this->columns = null;
 
         return $this;
     }
 
     /**
-     * @param string|HandlerInterface $handler
+     * @param FactoryInterface $factory
      *
      * @return Schema
      */
-    public function register($handler)
+    public function setFactory(FactoryInterface $factory)
     {
-        $this->handlers[] = $handler;
-        $this->cache = null;
-
-        return $this;
-    }
-
-    /**
-     * @param RegistryInterface $registry
-     *
-     * @return Schema
-     */
-    public function setRegistry(RegistryInterface $registry)
-    {
-        $this->registry = $registry;
+        $this->factory = $factory;
 
         return $this;
     }
@@ -89,90 +58,35 @@ class Schema
     /**
      * @param Row    $row
      * @param Entity $entity
-     *
-     * @return Schema
      */
     public function build(Row $row, Entity $entity)
     {
         foreach ($this->getColumns() as $column) {
             $column->build($row, $entity);
         }
-
-        return $this;
     }
 
     /**
-     * @return Column[]
-     *
      * @throws \LogicException
+     *
+     * @return Column[]
      */
     private function getColumns()
     {
-        if (null === $this->cache) {
-            $this->cache = array();
-
-            foreach ($this->columns as $name => $bits) {
-                list($column, $options) = $bits;
-                $column = $this->resolveColumn($column)->configure($name, $options);
-
-                foreach ($this->handlers as $handler) {
-                    $column->register($this->resolveHandler($handler));
-                }
-
-                $this->cache[] = $column;
-            }
+        if (null !== $this->columns) {
+            return $this->columns;
         }
 
-        return $this->cache;
-    }
-
-    /**
-     * @param mixed $column
-     *
-     * @return Column
-     *
-     * @throws \LogicException
-     * @throws \InvalidArgumentException
-     */
-    private function resolveColumn($column)
-    {
-        if (is_string($column)) {
-            if (null === $this->registry) {
-                throw new \LogicException('Registry must be set to resolve column by name.');
-            }
-
-            $column = $this->registry->getColumn($column);
+        if (null === $this->factory) {
+            throw new \LogicException('Factory must be set to create columns.');
         }
 
-        if (!$column instanceof Column) {
-            throw new \InvalidArgumentException('A column must be string or instance of Column.');
+        $this->columns = array();
+        foreach ($this->types as $name => $bits) {
+            list($type, $options) = $bits;
+            $this->columns[$name] = $this->factory->createColumn($type, $options);
         }
 
-        return $column;
-    }
-
-    /**
-     * @param mixed $handler
-     *
-     * @return HandlerInterface
-     *
-     * @throws \LogicException
-     * @throws \InvalidArgumentException
-     */
-    private function resolveHandler($handler)
-    {
-        if (is_string($handler)) {
-            if (null === $this->registry) {
-                throw new \LogicException('Registry must be set to resolve handler by name.');
-            }
-
-            $handler = $this->registry->getHandler($handler);
-        }
-
-        if (!$handler instanceof HandlerInterface) {
-            throw new \InvalidArgumentException('A handler must be string or instance of HandlerInterface.');
-        }
-
-        return $handler;
+        return $this->columns;
     }
 }

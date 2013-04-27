@@ -29,29 +29,22 @@ class Column
     private $handlers = array();
 
     /**
-     * @param HandlerInterface[] $handlers
-     */
-    public function __construct(array $handlers = array())
-    {
-        foreach ($handlers as $handler) {
-            $this->register($handler);
-        }
-    }
-
-    /**
      * @param HandlerInterface $handler
-     *
-     * @return Column
+     * @param boolean          $overwrite
      *
      * @throws \LogicException
+     *
+     * @return Column
      */
-    public function register(HandlerInterface $handler)
+    public function register(HandlerInterface $handler, $overwrite = false)
     {
         if (null !== $this->options) {
             throw new \LogicException('Column is configured and cannot accept new handlers.');
         }
 
-        $this->handlers[$handler->getType()] = $handler;
+        if (!isset($this->handlers[$handler->getType()]) || $overwrite) {
+            $this->handlers[$handler->getType()] = $handler;
+        }
 
         return $this;
     }
