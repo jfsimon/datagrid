@@ -35,9 +35,8 @@ Usage with custom data
 **This is not working yet, don't try this at home.**
 
 ```php
-$factory = new Factory();
-
-$schema = Schema::create($factory)
+$schema = new Schema();
+$schema
     ->add('title', 'string')
     ->add('publishedAt', 'datetime', array('format' => 'd/m/Y'))
     ->add('comments', 'count');
@@ -47,6 +46,7 @@ $collection = new Collection(array(
     array('title' => 'I\'m tired', 'publishedAt' => new \DateTime(), 'comments' => array()),
 ));
 
+$factory = new Factory();
 echo $factory
     ->createGrid($collection, array('schema' => $schema)
     ->render(new TwigRenderer($twig, 'my/template.html.twig'));
