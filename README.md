@@ -16,7 +16,6 @@ Work in progress
 - [x] Implement an AST with visitor capability
 - [x] Implement an easy way to build data grids
 - [x] Implement Twig renderer
-- [ ] Add events with optional dispatcher
 - [ ] Implement standard data formatters
 - [ ] Write some tests
 - [ ] Implement a labels extension

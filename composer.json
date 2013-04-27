@@ -10,7 +10,6 @@
         "email": "contact@jfsimon.fr"
     }],
     "require-dev": {
-        "symfony/form": "2.2.*",
         "twig/twig": "1.12.3"
     }
 }
