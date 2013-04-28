@@ -17,9 +17,9 @@ Work in progress
 - [x] Implement an easy way to build data grids
 - [x] Implement Twig renderer
 - [x] Implement standard data formatters
-- [ ] Write some tests
+- [x] Write some tests
 - [ ] Improve exceptions (classes & messages)
-- [ ] Implement a labels extension
+- [x] Implement a labels extension
 - [ ] Add sorting capability to labels
 - [ ] Implement a debug extension
 - [ ] Implement a Doctrine factory

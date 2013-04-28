@@ -22,7 +22,7 @@ class LabelFormatter implements FormatterInterface
      */
     public function format($value, array $options = array())
     {
-        return ucfirst(strtolower(preg_replace('~(?<=\\w)([A-Z])~', ' $1', $value)));
+        return ucfirst(strtolower(str_replace('_', ' ', preg_replace('~(?<=\\w)([A-Z])~', ' $1', $value))));
     }
 
     /**

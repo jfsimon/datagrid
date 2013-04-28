@@ -34,15 +34,6 @@ interface ExtensionInterface
     public function guessSchema(Entity $entity, array $options);
 
     /**
-     * Builds a column.
-     *
-     * @param Column $column
-     * @param string $type
-     * @param array  $options
-     */
-    public function buildColumn(Column $column, $type, array $options = array());
-
-    /**
      * Builds columns schema.
      *
      * @param Schema     $schema
@@ -50,6 +41,15 @@ interface ExtensionInterface
      * @param array      $options
      */
     public function buildSchema(Schema $schema, Collection $collection, array $options = array());
+
+    /**
+     * Builds a column.
+     *
+     * @param Column $column
+     * @param string $type
+     * @param array  $options
+     */
+    public function buildColumn(Column $column, $type, array $options = array());
 
     /**
      * Builds grid rows.

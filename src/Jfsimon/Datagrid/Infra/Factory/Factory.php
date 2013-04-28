@@ -82,12 +82,10 @@ class Factory implements FactoryInterface
     public function createColumn($type, array $options = array())
     {
         $column = new Column();
-        $column->configure($options);
-
         foreach ($this->extensions as $extension) {
             $extension->buildColumn($column, $type, $options);
         }
 
-        return $column;
+        return $column->configure($options);
     }
 }
