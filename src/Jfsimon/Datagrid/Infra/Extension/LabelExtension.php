@@ -36,6 +36,7 @@ class LabelExtension extends AbstractExtension
      */
     public function configure(OptionsResolver $resolver)
     {
+        $resolver->setDefaults(array(self::NAME => true));
         $this->handler->configure($resolver);
     }
 

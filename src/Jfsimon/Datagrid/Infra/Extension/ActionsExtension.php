@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Extension;
 
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
+use Jfsimon\Datagrid\Infra\Handler\ActionsHandler;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Schema;
@@ -20,10 +21,7 @@ class ActionsExtension extends AbstractExtension
      */
     public function configure(OptionsResolver $resolver)
     {
-        $resolver
-            ->setDefaults(array(self::NAME => null))
-            ->setAllowedTypes(array(self::NAME => 'Jfsimon\Datagrid\Infra\Extension\Action\ActionsConfig'))
-        ;
+        $resolver->setDefaults(array(self::NAME => null));
     }
 
     /**
@@ -42,7 +40,7 @@ class ActionsExtension extends AbstractExtension
     public function buildColumn(Column $column, $type, array $options = array())
     {
         if (self::NAME === $type) {
-            $column->register(new DataActionsHandler());
+            $column->register(new ActionsHandler());
         }
     }
 
