@@ -1,7 +1,8 @@
 <?php
 
-namespace Jfsimon\Datagrid\Infra\Extension\Data\Formatter;
+namespace Jfsimon\Datagrid\Infra\Formatter;
 
+use Jfsimon\Datagrid\Service\FormatterInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**

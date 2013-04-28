@@ -2,9 +2,10 @@
 
 namespace Jfsimon\Datagrid\Infra\Extension\Data;
 
-use Jfsimon\Datagrid\Infra\Extension\Data\Formatter\FormatterInterface;
+use Jfsimon\Datagrid\Infra\Extension\DataExtension;
 use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Data\Entity;
+use Jfsimon\Datagrid\Service\FormatterInterface;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Infra\Extension\Label;
 
+use Jfsimon\Datagrid\Infra\Extension\LabelExtension;
 use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\HandlerInterface;

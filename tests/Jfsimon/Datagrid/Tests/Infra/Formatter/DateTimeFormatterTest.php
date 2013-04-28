@@ -1,8 +1,8 @@
 <?php
 
-namespace Jfsimon\Datagrid\Tests\Infra\Extension\Data\Formatter;
+namespace Jfsimon\Datagrid\Tests\Infra\Formatter;
 
-use Jfsimon\Datagrid\Infra\Extension\Data\Formatter\DateTimeFormatter;
+use Jfsimon\Datagrid\Infra\Formatter\DateTimeFormatter;
 
 class DateTimeFormatterTest extends AbstractFormatterTest
 {

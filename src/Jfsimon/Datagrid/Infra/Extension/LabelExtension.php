@@ -1,8 +1,9 @@
 <?php
 
-namespace Jfsimon\Datagrid\Infra\Extension\Label;
+namespace Jfsimon\Datagrid\Infra\Extension;
 
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
+use Jfsimon\Datagrid\Infra\Extension\Label\LabelHandler;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
@@ -21,7 +22,7 @@ class LabelExtension extends AbstractExtension
      */
     public function configure(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('label' => true));
+        $resolver->setDefaults(array(self::NAME => true));
     }
 
     /**
@@ -29,7 +30,7 @@ class LabelExtension extends AbstractExtension
      */
     public function buildGrid(Grid $grid, Collection $collection, array $options = array())
     {
-        if ($options['label']) {
+        if ($options[self::NAME]) {
             $grid->getHead()->add(self::NAME, new Row(self::NAME));
         }
     }
@@ -39,7 +40,7 @@ class LabelExtension extends AbstractExtension
      */
     public function buildColumn(Column $column, $type, array $options = array())
     {
-        if ($options['label']) {
+        if ($options[self::NAME]) {
             $column->register(new LabelHandler());
         }
     }

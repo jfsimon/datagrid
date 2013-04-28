@@ -1,8 +1,8 @@
 <?php
 
-namespace Jfsimon\Datagrid\Tests\Infra\Extension\Data\Formatter;
+namespace Jfsimon\Datagrid\Tests\Infra\Formatter;
 
-use Jfsimon\Datagrid\Infra\Extension\Data\Formatter\BooleanFormatter;
+use Jfsimon\Datagrid\Infra\Formatter\BooleanFormatter;
 
 class BooleanFormatterTest extends AbstractFormatterTest
 {

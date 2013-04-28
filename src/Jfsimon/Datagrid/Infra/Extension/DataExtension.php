@@ -1,14 +1,16 @@
 <?php
 
-namespace Jfsimon\Datagrid\Infra\Extension\Data;
+namespace Jfsimon\Datagrid\Infra\Extension;
 
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
-use Jfsimon\Datagrid\Infra\Extension\Data\Formatter;
+use Jfsimon\Datagrid\Infra\Extension\Data\DataHandler;
+use Jfsimon\Datagrid\Infra\Formatter;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Schema;
+use Jfsimon\Datagrid\Service\FormatterInterface;
 
 /**
  * @author Jean-François Simon <contact@jfsimon.fr>
@@ -18,7 +20,7 @@ class DataExtension extends AbstractExtension
     const NAME = 'data';
 
     /**
-     * @var Formatter\FormatterInterface[]
+     * @var FormatterInterface[]
      */
     private $formatters;
 
@@ -36,11 +38,11 @@ class DataExtension extends AbstractExtension
     }
 
     /**
-     * @param Formatter\FormatterInterface $formatter
+     * @param FormatterInterface $formatter
      *
      * @return DataExtension
      */
-    public function registerFormatter(Formatter\FormatterInterface $formatter)
+    public function registerFormatter(FormatterInterface $formatter)
     {
         $this->formatters[$formatter->getName()] = $formatter;
 

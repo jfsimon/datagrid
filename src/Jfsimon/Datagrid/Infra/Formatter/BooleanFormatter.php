@@ -1,13 +1,14 @@
 <?php
 
-namespace Jfsimon\Datagrid\Infra\Extension\Data\Formatter;
+namespace Jfsimon\Datagrid\Infra\Formatter;
 
+use Jfsimon\Datagrid\Service\FormatterInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Jean-François Simon <contact@jfsimon.fr>
  */
-class StringFormatter implements FormatterInterface
+class BooleanFormatter implements FormatterInterface
 {
     /**
      * {@inheritdoc}
@@ -15,7 +16,8 @@ class StringFormatter implements FormatterInterface
     public function configure(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'null_value' => '',
+            'true_value'  => 'yes',
+            'false_value' => 'no',
         ));
     }
 
@@ -24,11 +26,7 @@ class StringFormatter implements FormatterInterface
      */
     public function format($value, array $options = array())
     {
-        if (null === $value) {
-            return $options['null_value'];
-        }
-
-        return (string) $value;
+        return $value ? $options['true_value'] : $options['false_value'];
     }
 
     /**
@@ -36,6 +34,6 @@ class StringFormatter implements FormatterInterface
      */
     public function getName()
     {
-        return 'string';
+        return 'boolean';
     }
 }
