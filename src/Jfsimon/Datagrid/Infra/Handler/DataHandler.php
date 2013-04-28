@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Extension\Data;
 
 use Jfsimon\Datagrid\Infra\Extension\DataExtension;
+use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\FormatterInterface;
@@ -38,9 +39,9 @@ class DataHandler implements HandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function handle(Entity $entity, $name, array $options)
+    public function handle(Column $column, Entity $entity = null, array $options = array())
     {
-        $value = $entity->get($name);
+        $value = $entity->get($column->getName());
 
         return new Cell($this->formatter->format($value, $options));
     }

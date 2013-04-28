@@ -55,10 +55,11 @@ interface ExtensionInterface
      * Builds grid rows.
      *
      * @param Grid       $grid
+     * @param Schema     $schema
      * @param Collection $collection
      * @param array      $options
      */
-    public function buildGrid(Grid $grid, Collection $collection, array $options = array());
+    public function buildGrid(Grid $grid, Schema $schema, Collection $collection, array $options = array());
 
     /**
      * Visits grid.

@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Service;
 
+use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,15 +22,15 @@ interface HandlerInterface
     public function configure(OptionsResolver $resolver);
 
     /**
-     * Generates a cell with given entity, column name & options.
+     * Generates a cell with given column, optional entity & options.
      *
-     * @param Entity $entity
-     * @param string $name
-     * @param array  $options
+     * @param Column      $column
+     * @param Entity|null $entity
+     * @param array       $options
      *
      * @return Cell
      */
-    public function handle(Entity $entity, $name, array $options);
+    public function handle(Column $column, Entity $entity = null, array $options = array());
 
     /**
      * Returns supported row type.

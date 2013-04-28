@@ -52,13 +52,8 @@ class DataExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function buildGrid(Grid $grid, Collection $collection, array $options = array())
+    public function buildGrid(Grid $grid, Schema $schema, Collection $collection, array $options = array())
     {
-        $schema = $options['schema'];
-        if (!$schema instanceof Schema) {
-            throw new \InvalidArgumentException('Schema option must be an instance of Schema.');
-        }
-
         $index = 0;
         while ($entity = $collection->next()) {
             $schema->build($row = new Row(self::NAME), $entity);

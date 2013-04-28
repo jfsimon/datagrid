@@ -23,7 +23,7 @@ class Grid extends AbstractComponent
      * @param string       $name
      * @param null|string  $caption
      */
-    public function __construct(Section $head = null, Section $body = null, Section $foot = null, $name = 'default', $caption = null)
+    public function __construct(Section $head = null, Section $body = null, Section $foot = null, $name = 'datagrid', $caption = null)
     {
         parent::__construct();
 
@@ -40,6 +40,38 @@ class Grid extends AbstractComponent
         $this->name = $name;
         $this->caption = $caption;
         $this->columns = array();
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Grid
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param null|string $caption
+     *
+     * @return Grid
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
     }
 
     /**

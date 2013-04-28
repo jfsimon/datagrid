@@ -2,11 +2,10 @@
 
 namespace Jfsimon\Datagrid\Model;
 
+use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\FactoryInterface;
-use Jfsimon\Datagrid\Service\HandlerInterface;
-use Jfsimon\Datagrid\Service\RegistryInterface;
 
 /**
  * @author Jean-François Simon <contact@jfsimon.fr>
@@ -24,9 +23,14 @@ class Schema
     private $columns;
 
     /**
-     * @var FactoryInterface
+     * @var FactoryInterface|null
      */
     private $factory;
+
+    /**
+     * @var Grid|null
+     */
+    private $grid;
 
     /**
      * @param string        $name
@@ -45,25 +49,44 @@ class Schema
 
     /**
      * @param FactoryInterface $factory
+     * @param Grid             $grid
      *
      * @return Schema
      */
-    public function setFactory(FactoryInterface $factory)
+    public function bind(FactoryInterface $factory, Grid $grid)
     {
         $this->factory = $factory;
+        $this->grid = $grid;
 
         return $this;
     }
 
     /**
-     * @param Row    $row
-     * @param Entity $entity
+     * @param Row         $row
+     * @param Entity|null $entity
      */
-    public function build(Row $row, Entity $entity)
+    public function build(Row $row, Entity $entity = null)
     {
-        foreach ($this->getColumns() as $column) {
-            $column->build($row, $entity);
+        foreach ($this->getColumns() as $name => $column) {
+            $column
+                ->bind($this->grid, $name)
+                ->build($row, $entity)
+            ;
         }
+    }
+
+    /**
+     * @throws \LogicException
+     *
+     * @return Grid|null
+     */
+    public function getGrid()
+    {
+        if (null === $this->grid) {
+            throw new \LogicException('Schema must be bound to access grid.');
+        }
+
+        return $this->grid;
     }
 
     /**
@@ -78,7 +101,7 @@ class Schema
         }
 
         if (null === $this->factory) {
-            throw new \LogicException('Factory must be set to create columns.');
+            throw new \LogicException('Schema must be bound to create columns.');
         }
 
         $this->columns = array();

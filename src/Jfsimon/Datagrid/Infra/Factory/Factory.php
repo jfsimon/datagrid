@@ -3,9 +3,8 @@
 namespace Jfsimon\Datagrid\Infra\Factory;
 
 use Jfsimon\Datagrid\Infra\Extension\CoreExtension;
-use Jfsimon\Datagrid\Infra\Extension\Data\DataExtension;
+use Jfsimon\Datagrid\Infra\Extension\DataExtension;
 use Jfsimon\Datagrid\Model\Column;
-use Jfsimon\Datagrid\Model\Schema;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Service\ExtensionInterface;
@@ -48,27 +47,26 @@ class Factory implements FactoryInterface
      */
     public function createGrid(Collection $collection, array $options = array())
     {
+        $schema = null;
         foreach ($this->extensions as $extension) {
             $schema = $extension->guessSchema($collection->getPeek(), $options);
-
             if (null !== $schema) {
-                $options['schema'] = $schema;
+                break;
             }
         }
-
-        if (!$options['schema'] instanceof Schema) {
+        if (null === $schema) {
             throw new \LogicException('Unable to guess schema.');
         }
 
+        $grid = new Grid();
+        $schema->bind($this, $grid);
+
         foreach ($this->extensions as $extension) {
-            $extension->buildSchema($options['schema'], $collection, $options);
+            $extension->buildSchema($schema, $collection, $options);
         }
 
-        $options['schema']->setFactory($this);
-        $grid = new Grid();
-
         foreach ($this->extensions as $extension) {
-            $extension->buildGrid($grid, $collection, $options);
+            $extension->buildGrid($grid, $schema, $collection, $options);
         }
 
         foreach ($this->extensions as $extension) {
@@ -84,6 +82,7 @@ class Factory implements FactoryInterface
     public function createColumn($type, array $options = array())
     {
         $column = new Column();
+        $column->configure($options);
 
         foreach ($this->extensions as $extension) {
             $extension->buildColumn($column, $type, $options);

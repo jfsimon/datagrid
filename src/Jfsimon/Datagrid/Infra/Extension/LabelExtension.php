@@ -8,6 +8,7 @@ use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Collection;
+use Jfsimon\Datagrid\Model\Schema;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -18,20 +19,34 @@ class LabelExtension extends AbstractExtension
     const NAME = 'label';
 
     /**
-     * {@inheritdoc}
+     * @var LabelHandler
      */
-    public function configure(OptionsResolver $resolver)
+    private $handler;
+
+    /**
+     * @param LabelHandler $handler
+     */
+    public function __construct(LabelHandler $handler = null)
     {
-        $resolver->setDefaults(array(self::NAME => true));
+        $this->handler = $handler ?: new LabelHandler();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildGrid(Grid $grid, Collection $collection, array $options = array())
+    public function configure(OptionsResolver $resolver)
+    {
+        $this->handler->configure($resolver);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildGrid(Grid $grid, Schema $schema, Collection $collection, array $options = array())
     {
         if ($options[self::NAME]) {
-            $grid->getHead()->add(self::NAME, new Row(self::NAME));
+            $schema->build($row = new Row(self::NAME));
+            $grid->getHead()->add(self::NAME, $row);
         }
     }
 
@@ -41,7 +56,7 @@ class LabelExtension extends AbstractExtension
     public function buildColumn(Column $column, $type, array $options = array())
     {
         if ($options[self::NAME]) {
-            $column->register(new LabelHandler());
+            $column->register($this->handler);
         }
     }
 

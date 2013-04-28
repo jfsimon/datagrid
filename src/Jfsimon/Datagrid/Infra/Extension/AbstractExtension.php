@@ -47,7 +47,7 @@ abstract class AbstractExtension implements ExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function buildGrid(Grid $grid, Collection $collection, array $options = array())
+    public function buildGrid(Grid $grid, Schema $schema, Collection $collection, array $options = array())
     {
     }
 

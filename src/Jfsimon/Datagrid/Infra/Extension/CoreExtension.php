@@ -2,7 +2,10 @@
 
 namespace Jfsimon\Datagrid\Infra\Extension;
 
+use Jfsimon\Datagrid\Model\Component\Grid;
+use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Data\Entity;
+use Jfsimon\Datagrid\Model\Schema;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -18,7 +21,9 @@ class CoreExtension extends AbstractExtension
     public function configure(OptionsResolver $resolver)
     {
         $resolver->setAllowedTypes(array(
-            'schema' => 'Jfsimon\Datagrid\Model\Schema',
+            'schema'  => 'Jfsimon\Datagrid\Model\Schema',
+            'name'    => 'datagrid',
+            'caption' => 'datagrid',
         ));
     }
 
@@ -28,6 +33,17 @@ class CoreExtension extends AbstractExtension
     public function guessSchema(Entity $entity, array $options)
     {
         return isset($options['schema']) ? $options['schema'] : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildGrid(Grid $grid, Schema $schema, Collection $collection, array $options = array())
+    {
+        $grid
+            ->setName($options['name'])
+            ->setCaption($options['caption'])
+        ;
     }
 
     /**

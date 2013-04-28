@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Extension\Action;
 
 use Jfsimon\Datagrid\Infra\Extension\DataExtension;
+use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,7 +23,7 @@ class DataActionsHandler implements HandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function handle(Entity $entity, $name, array $options)
+    public function handle(Column $column, Entity $entity = null, array $options = array())
     {
         return new ActionsCell($entity, $options);
     }
