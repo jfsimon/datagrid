@@ -24,7 +24,7 @@ class TwigRenderer implements RendererInterface
      * Constructor.
      *
      * @param \Twig_Environment $twigEnvironment
-     * @param string            $defaultTemplate
+     * @param string|null       $defaultTemplate
      */
     public function __construct(\Twig_Environment $twigEnvironment, $defaultTemplate)
     {
@@ -57,8 +57,10 @@ class TwigRenderer implements RendererInterface
      */
     private function loadTemplate($template = null)
     {
+        $template = $template ?: $this->defaultTemplate;
+
         try {
-            return $this->twigEnvironment->loadTemplate($template ?: $this->defaultTemplate);
+            return $this->twigEnvironment->loadTemplate($template);
         } catch (\Exception $e) {
             throw TemplateException::twigTemplateNotFound($template, $e);
         }

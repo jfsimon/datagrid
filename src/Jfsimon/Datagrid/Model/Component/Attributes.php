@@ -74,8 +74,26 @@ class Attributes
     public function all()
     {
         $attributes = array_filter($this->attributes, function ($attr) { return (bool) $attr; });
-        $attributes['class'] = implode(' ', $this->classes);
+
+        if (count($this->classes)) {
+            $attributes['class'] = implode(' ', $this->classes);
+        }
 
         return $attributes;
+    }
+
+    /**
+     * Renders attributes as HTML string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $html = '';
+        foreach ($this->all() as $name => $value) {
+            $html .= sprintf(' %s="%s"', $name, $value);
+        }
+
+        return $html;
     }
 }

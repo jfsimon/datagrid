@@ -4,7 +4,7 @@ namespace Jfsimon\Datagrid\Infra\Extension;
 
 use Jfsimon\Datagrid\Exception\FormatterException;
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
-use Jfsimon\Datagrid\Infra\Extension\Data\DataHandler;
+use Jfsimon\Datagrid\Infra\Handler\DataHandler;
 use Jfsimon\Datagrid\Infra\Formatter;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
@@ -30,12 +30,12 @@ class DataExtension extends AbstractExtension
      */
     public function __construct()
     {
-        $this->formatters = array(
-            new Formatter\BooleanFormatter(),
-            new Formatter\DateTimeFormatter(),
-            new Formatter\NumberFormatter(),
-            new Formatter\StringFormatter(),
-        );
+        $this
+            ->registerFormatter(new Formatter\StringFormatter())
+            ->registerFormatter(new Formatter\NumberFormatter())
+            ->registerFormatter(new Formatter\BooleanFormatter())
+            ->registerFormatter(new Formatter\DateTimeFormatter())
+        ;
     }
 
     /**
@@ -57,7 +57,7 @@ class DataExtension extends AbstractExtension
     {
         $index = 0;
         while ($entity = $collection->next()) {
-            $schema->build($row = new Row(self::NAME), $entity);
+            $schema->build($row = new Row(self::NAME), $entity, $options);
             $grid->getBody()->add($entity->getId() ?: $index ++, $row);
         };
     }

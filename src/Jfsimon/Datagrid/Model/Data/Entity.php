@@ -62,6 +62,10 @@ class Entity
     {
         $path = isset($this->mapping[$name]) ? $this->mapping[$name] : $name;
 
+        if (is_array($this->data)) {
+            $path = '['.$path.']';
+        }
+
         return $this->accessor->getValue($this->data, $path);
     }
 

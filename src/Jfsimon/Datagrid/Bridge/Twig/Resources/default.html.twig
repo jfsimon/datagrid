@@ -1,6 +1,6 @@
 {% block grid %}
 {% spaceless %}
-    <table {{ block(attributes) }}>
+    <table{{ attributes|raw }}>
         {{ head ? datagrid(head, options) : '' }}
         {{ body ? datagrid(body, options) : '' }}
         {{ foot ? datagrid(foot, options) : '' }}
@@ -10,24 +10,24 @@
 
 {% block headSection %}
 {% spaceless %}
-    <thead{{ block(attributes) }}>
-        {{ block(rows) }}
+    <thead{{ attributes|raw }}>
+        {{ block('rows') }}
     </thead>
 {% endspaceless %}
 {% endblock headSection %}
 
 {% block bodySection %}
 {% spaceless %}
-    <tbody{{ block(attributes) }}>
-        {{ block(rows) }}
+    <tbody{{ attributes|raw }}>
+        {{ block('rows') }}
     </tbody>
 {% endspaceless %}
 {% endblock bodySection %}
 
 {% block footSection %}
 {% spaceless %}
-    <tfoot{{ block(attributes) }}>
-        {{ block(rows) }}
+    <tfoot{{ attributes|raw }}>
+        {{ block('rows') }}
     </tfoot>
 {% endspaceless %}
 {% endblock footSection %}
@@ -42,7 +42,7 @@
 
 {% block row %}
 {% spaceless %}
-    <tr{{ block(attributes) }}>
+    <tr{{ attributes|raw }}>
         {% for cell in cells %}
             {{ datagrid(cell, options) }}
         {% endfor %}
@@ -53,17 +53,9 @@
 {% block cell %}
 {% spaceless %}
     {% if heading %}
-        <th{{ block(attributes) }}>{{ content }}</th>
+        <th{{ attributes|raw }}>{{ content }}</th>
     {% else %}
-        <td{{ block(attributes) }}>{{ content }}</td>
+        <td{{ attributes|raw }}>{{ content }}</td>
     {% endif %}
 {% endspaceless %}
 {% endblock cell %}
-
-{% block attributes %}
-{% spaceless %}
-    {% for name, value in attributes.all() %}
-        {{ ' ' ~ name ~ '="' ~ value ~ '"' }}
-    {% endfor %}
-{% endspaceless %}
-{% endblock attributes %}

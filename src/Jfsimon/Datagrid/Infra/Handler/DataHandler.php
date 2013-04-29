@@ -1,6 +1,6 @@
 <?php
 
-namespace Jfsimon\Datagrid\Infra\Extension\Data;
+namespace Jfsimon\Datagrid\Infra\Handler;
 
 use Jfsimon\Datagrid\Infra\Extension\DataExtension;
 use Jfsimon\Datagrid\Model\Column;

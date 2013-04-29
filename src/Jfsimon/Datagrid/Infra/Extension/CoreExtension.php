@@ -20,10 +20,10 @@ class CoreExtension extends AbstractExtension
      */
     public function configure(OptionsResolver $resolver)
     {
-        $resolver->setAllowedTypes(array(
-            'schema'  => 'Jfsimon\Datagrid\Model\Schema',
+        $resolver->setDefaults(array(
+            'schema'  => null,
             'name'    => 'datagrid',
-            'caption' => 'datagrid',
+            'caption' => null,
         ));
     }
 

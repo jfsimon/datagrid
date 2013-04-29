@@ -71,10 +71,11 @@ class Schema
      *
      * @param Row         $row
      * @param Entity|null $entity
+     * @param array       $options
      */
-    public function build(Row $row, Entity $entity = null)
+    public function build(Row $row, Entity $entity = null, array $options)
     {
-        foreach ($this->getColumns() as $name => $column) {
+        foreach ($this->getColumns($options) as $name => $column) {
             $column
                 ->bind($this->grid, $name)
                 ->build($row, $entity)
@@ -101,11 +102,13 @@ class Schema
     /**
      * Creates columns.
      *
+     * @param array $options
+     *
      * @throws WorkflowException
      *
      * @return Column[]
      */
-    private function getColumns()
+    private function getColumns(array $options)
     {
         if (null !== $this->columns) {
             return $this->columns;
@@ -118,8 +121,8 @@ class Schema
         $this->columns = array();
 
         foreach ($this->types as $name => $bits) {
-            list($type, $options) = $bits;
-            $this->columns[$name] = $this->factory->createColumn($type, $options);
+            list($type, $columnOptions) = $bits;
+            $this->columns[$name] = $this->factory->createColumn($type, $options, $columnOptions);
         }
 
         return $this->columns;

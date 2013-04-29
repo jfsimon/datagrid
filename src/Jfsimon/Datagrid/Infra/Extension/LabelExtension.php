@@ -3,7 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Extension;
 
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
-use Jfsimon\Datagrid\Infra\Extension\Label\LabelHandler;
+use Jfsimon\Datagrid\Infra\Handler\LabelHandler;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
@@ -46,7 +46,7 @@ class LabelExtension extends AbstractExtension
     public function buildGrid(Grid $grid, Schema $schema, Collection $collection, array $options = array())
     {
         if ($options[self::NAME]) {
-            $schema->build($row = new Row(self::NAME));
+            $schema->build($row = new Row(self::NAME), null, $options);
             $grid->getHead()->add(self::NAME, $row);
         }
     }

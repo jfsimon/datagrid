@@ -1,6 +1,6 @@
 <?php
 
-namespace Jfsimon\Datagrid\Infra\Extension\Label;
+namespace Jfsimon\Datagrid\Infra\Handler;
 
 use Jfsimon\Datagrid\Infra\Extension\LabelExtension;
 use Jfsimon\Datagrid\Infra\Formatter\LabelFormatter;
@@ -37,12 +37,12 @@ class LabelHandler implements HandlerInterface
             $cell = new Cell(strtr($options[LabelExtension::NAME.'_trans_pattern'], array(
                 '{grid}'   => $column->getGrid()->getName(),
                 '{column}' => $column->getName(),
-            )));
+            )), true);
             $cell->vars['trans_enabled'] = true;
             $cell->vars['trans_domain'] = $options[LabelExtension::NAME.'_trans_domain'];
         } else {
             $formatter = new LabelFormatter();
-            $cell = new Cell($formatter->format($column->getName()));
+            $cell = new Cell($formatter->format($column->getName()), true);
         }
 
         return $cell;

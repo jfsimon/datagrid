@@ -7,7 +7,7 @@ with sorting, filtering capabilities (ideal for backends).
 Backlog
 -------
 
-- [ ] as a user I want to render a collection of strings (in-memory arrays) as an HTML table
+- [x] as a user I want to render a collection of strings (in-memory arrays) as an HTML table
 - [ ] as a user I want to render a collection of mixed data (string, number, datetime) (in-memory arrays) as an HTML table
 - [ ] as a user I want to get columns name in header
 - [ ] as a user I want to automatically display CRUD links on each row
@@ -28,21 +28,27 @@ Usage with custom data
 **This is not working yet, don't try this at home.**
 
 ```php
+$quarks = array(
+    array('name' => 'Up',      'generation' => 'first',  'charge' => '+2/3', 'antiparticle' => 'Antiup'),
+    array('name' => 'Down',    'generation' => 'first',  'charge' => '-1/3', 'antiparticle' => 'Antidown'),
+    array('name' => 'Charm',   'generation' => 'second', 'charge' => '+2/3', 'antiparticle' => 'Anticharm'),
+    array('name' => 'Strange', 'generation' => 'second', 'charge' => '-1/3', 'antiparticle' => 'Antistrange'),
+    array('name' => 'Top',     'generation' => 'third',  'charge' => '+2/3', 'antiparticle' => 'Antitop'),
+    array('name' => 'Bottom',  'generation' => 'third',  'charge' => '-1/3', 'antiparticle' => 'Antibottom'),
+);
+
 $schema = new Schema();
 $schema
-    ->add('title', 'string')
-    ->add('publishedAt', 'datetime', array('format' => 'd/m/Y'))
-    ->add('comments', 'count');
-
-$collection = new Collection(array(
-    array('title' => 'hello world!', 'publishedAt' => new \DateTime(), 'comments' => array('great')),
-    array('title' => 'I\'m tired', 'publishedAt' => new \DateTime(), 'comments' => array()),
-));
+    ->add('name', 'string')
+    ->add('generation', 'string')
+    ->add('charge', 'string')
+    ->add('antiparticle', 'string')
+;
 
 $factory = new Factory();
-echo $factory
-    ->createGrid($collection, array('schema' => $schema)
-    ->render(new TwigRenderer($twig, 'my/template.html.twig'));
+$html = $factory
+    ->createGrid(new Collection($quarks), array('schema' => $schema))
+    ->render(new TwigRenderer($this->getTwig(), 'default.html.twig'));
 ```
 
 Usage with Doctrine

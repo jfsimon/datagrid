@@ -91,9 +91,11 @@ class Collection
 
         $item = $this->data->current();
 
-        if (false === $item) {
+        if (null === $item) {
             return null;
         }
+
+        $this->data->next();
 
         return new Entity($item, $this->accessor, $this->options['mapping'], $this->options['id_path']);
     }
