@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Infra\Renderer;
 
+use Jfsimon\Datagrid\Exception\TemplateException;
 use Jfsimon\Datagrid\Service\RendererInterface;
 
 /**
@@ -44,7 +45,7 @@ class TwigRenderer implements RendererInterface
             }
         }
 
-        throw new \InvalidArgumentException('Block not found.');
+        throw TemplateException::twigBlockNotFound($templates, $template);
     }
 
     /**
@@ -52,14 +53,14 @@ class TwigRenderer implements RendererInterface
      *
      * @return \Twig_Template
      *
-     * @throws \InvalidArgumentException
+     * @throws TemplateException
      */
     private function loadTemplate($template = null)
     {
         try {
             return $this->twigEnvironment->loadTemplate($template ?: $this->defaultTemplate);
         } catch (\Exception $e) {
-            throw new \InvalidArgumentException('Template not found.');
+            throw TemplateException::twigTemplateNotFound($template, $e);
         }
     }
 }

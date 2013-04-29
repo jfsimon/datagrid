@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Model\Component;
 
+use Jfsimon\Datagrid\Exception\WorkflowException;
 use Jfsimon\Datagrid\Service\RendererInterface;
 use Jfsimon\Datagrid\Service\VisitorInterface;
 
@@ -76,7 +77,7 @@ abstract class AbstractComponent implements ComponentInterface
     public function render(RendererInterface $renderer, array $options = array())
     {
         if (null === $this->name) {
-            throw new \LogicException('Component must be bound before rendering.');
+            throw WorkflowException::unboundComponent($this, 'rendering');
         }
 
         $templates = isset($options['template']) ? array($options['template']) : $this->getRendererTemplates();

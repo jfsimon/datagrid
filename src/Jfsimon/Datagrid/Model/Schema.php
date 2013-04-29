@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Model;
 
+use Jfsimon\Datagrid\Exception\WorkflowException;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Entity;
@@ -33,6 +34,8 @@ class Schema
     private $grid;
 
     /**
+     * Adds a column type.
+     *
      * @param string        $name
      * @param string|Column $type
      * @param array         $options
@@ -48,6 +51,8 @@ class Schema
     }
 
     /**
+     * Binds schema to grid.
+     *
      * @param FactoryInterface $factory
      * @param Grid             $grid
      *
@@ -62,6 +67,8 @@ class Schema
     }
 
     /**
+     * Builds row.
+     *
      * @param Row         $row
      * @param Entity|null $entity
      */
@@ -76,21 +83,25 @@ class Schema
     }
 
     /**
-     * @throws \LogicException
+     * Returns bound grid.
+     *
+     * @throws WorkflowException
      *
      * @return Grid|null
      */
     public function getGrid()
     {
         if (null === $this->grid) {
-            throw new \LogicException('Schema must be bound to access grid.');
+            throw WorkflowException::unboundSchema('grid access');
         }
 
         return $this->grid;
     }
 
     /**
-     * @throws \LogicException
+     * Creates columns.
+     *
+     * @throws WorkflowException
      *
      * @return Column[]
      */
@@ -101,7 +112,7 @@ class Schema
         }
 
         if (null === $this->factory) {
-            throw new \LogicException('Schema must be bound to create columns.');
+            throw WorkflowException::unboundSchema('columns creation');
         }
 
         $this->columns = array();

@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Service;
 
+use Jfsimon\Datagrid\Exception\FormatterException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -21,6 +22,8 @@ interface FormatterInterface
      *
      * @param mixed $value
      * @param array $options
+     *
+     * @throws FormatterException
      *
      * @return string
      */

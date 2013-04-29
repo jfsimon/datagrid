@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Infra\Factory;
 
+use Jfsimon\Datagrid\Exception\ConfigurationException;
 use Jfsimon\Datagrid\Infra\Extension\CoreExtension;
 use Jfsimon\Datagrid\Infra\Extension\DataExtension;
 use Jfsimon\Datagrid\Model\Column;
@@ -55,7 +56,7 @@ class Factory implements FactoryInterface
             }
         }
         if (null === $schema) {
-            throw new \LogicException('Unable to guess schema.');
+            throw ConfigurationException::schemaNotFound(array_keys($this->extensions));
         }
 
         $grid = new Grid();

@@ -18,7 +18,7 @@ Work in progress
 - [x] Implement Twig renderer
 - [x] Implement standard data formatters
 - [x] Write some tests
-- [ ] Improve exceptions (classes & messages)
+- [x] Improve exceptions (classes & messages)
 - [x] Implement a labels extension
 - [ ] Add sorting capability to labels
 - [ ] Implement a debug extension

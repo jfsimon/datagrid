@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Model\Data;
 
+use Jfsimon\Datagrid\Exception\DataException;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
@@ -39,12 +40,12 @@ class Entity
      * @param array                     $mapping
      * @param string|null               $idPath
      *
-     * @throws \InvalidArgumentException
+     * @throws DataException
      */
     public function __construct($data, PropertyAccessorInterface $accessor, array $mapping = array(), $idPath = null)
     {
         if (!is_array($data) && !is_object($data)) {
-           throw new \InvalidArgumentException('Entity data must be array or object.');
+           throw DataException::invalidEntityData($data);
         }
 
         $this->data = $data;

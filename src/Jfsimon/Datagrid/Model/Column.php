@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Model;
 
+use Jfsimon\Datagrid\Exception\WorkflowException;
 use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
@@ -38,14 +39,14 @@ class Column
      * @param HandlerInterface $handler
      * @param boolean          $overwrite
      *
-     * @throws \LogicException
+     * @throws WorkflowException
      *
      * @return Column
      */
     public function register(HandlerInterface $handler, $overwrite = false)
     {
         if (null !== $this->options) {
-            throw new \LogicException('Column is configured and cannot accept new handlers.');
+            throw WorkflowException::configuredColumn($this, 'handler registration');
         }
 
         if (!isset($this->handlers[$handler->getType()]) || $overwrite) {
@@ -92,12 +93,12 @@ class Column
      *
      * @return Column
      *
-     * @throws \LogicException
+     * @throws WorkflowException
      */
     public function build(Row $row, Entity $entity = null)
     {
         if (null === $this->options) {
-            throw new \LogicException('Column must be configured before handling.');
+            throw WorkflowException::notConfiguredColumn($this, 'row building');
         }
 
         $cell = isset($this->handlers[$row->getType()])

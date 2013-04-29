@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Model\Data;
 
+use Jfsimon\Datagrid\Exception\DataException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -44,9 +45,9 @@ class Collection
      * * id_path: path of the ID field
      *
      * @param array|\Traversable $data
-     * @param array              $options
+     * @param array $options
      *
-     * @throws \InvalidArgumentException
+     * @throws DataException
      */
     public function __construct($data, array $options = array())
     {
@@ -66,7 +67,7 @@ class Collection
         }
 
         if (null === $this->type) {
-            throw new \InvalidArgumentException('Collection data must be traversable or array');
+            throw DataException::invalidCollectionData($data);
         }
 
         $this->options = array_merge(array('mapping' => array(), 'id_path' => null), $options);
@@ -120,7 +121,7 @@ class Collection
      *
      * @return array|\Traversable
      *
-     * @throws \LogicException
+     * @throws DataException
      */
     public function getRaw()
     {
@@ -130,7 +131,7 @@ class Collection
             case self::TYPE_AGGREGATE: return $this->data->getInnerIterator();
         }
 
-        throw new \LogicException('Invalid data.');
+        throw DataException::invalidCollectionData($this->data);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Model\Component;
 
+use Jfsimon\Datagrid\Exception\WorkflowException;
 use Jfsimon\Datagrid\Service\RendererInterface;
 use Jfsimon\Datagrid\Service\VisitorInterface;
 
@@ -31,6 +32,8 @@ interface ComponentInterface
      *
      * @param RendererInterface $renderer
      * @param array             $options
+     *
+     * @throws WorkflowException if component is not bound
      *
      * @return string
      */

@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Service;
 
+use Jfsimon\Datagrid\Exception\FormatterException;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
@@ -48,6 +49,8 @@ interface ExtensionInterface
      * @param Column $column
      * @param string $type
      * @param array  $options
+     *
+     * @throws FormatterException if formatter not found
      */
     public function buildColumn(Column $column, $type, array $options = array());
 

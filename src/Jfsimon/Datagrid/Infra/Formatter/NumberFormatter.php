@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Infra\Formatter;
 
+use Jfsimon\Datagrid\Exception\FormatterException;
 use Jfsimon\Datagrid\Service\FormatterInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -33,7 +34,7 @@ class NumberFormatter implements FormatterInterface
         }
 
         if (!is_numeric($value)) {
-            throw new \InvalidArgumentException('Value mus be numeric.');
+            throw FormatterException::invalidType($this, $value, 'numeric value');
         }
 
         $formatter = new \NumberFormatter(\Locale::getDefault(), \NumberFormatter::DECIMAL);
@@ -48,7 +49,7 @@ class NumberFormatter implements FormatterInterface
         $value = $formatter->format($value);
 
         if (intl_is_failure($formatter->getErrorCode())) {
-            throw new \RuntimeException($formatter->getErrorMessage());
+            throw FormatterException::intlError($this, $formatter->getErrorMessage());
         }
 
         return $value;
@@ -61,4 +62,5 @@ class NumberFormatter implements FormatterInterface
     {
         return 'number';
     }
+
 }

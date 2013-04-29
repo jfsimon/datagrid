@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Infra\Extension;
 
+use Jfsimon\Datagrid\Exception\FormatterException;
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
 use Jfsimon\Datagrid\Infra\Extension\Data\DataHandler;
 use Jfsimon\Datagrid\Infra\Formatter;
@@ -67,7 +68,7 @@ class DataExtension extends AbstractExtension
     public function buildColumn(Column $column, $type, array $options = array())
     {
         if (!isset($this->formatters[$type])) {
-            throw new \LogicException('No formatter found for given type.');
+            throw FormatterException::notFound($type, array_keys($this->formatters));
         }
 
         $column->register(new DataHandler($this->formatters[$type]));

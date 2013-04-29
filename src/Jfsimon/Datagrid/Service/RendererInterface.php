@@ -2,6 +2,8 @@
 
 namespace Jfsimon\Datagrid\Service;
 
+use Jfsimon\Datagrid\Exception\TemplateException;
+
 /**
  * Component renderer service interface.
  *
@@ -18,6 +20,8 @@ interface RendererInterface
      * @param array $templates
      * @param array $context
      * @param array $options
+     *
+     * @throws TemplateException if template not found
      *
      * @return string
      */

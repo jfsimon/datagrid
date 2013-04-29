@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Service;
 
+use Jfsimon\Datagrid\Exception\ConfigurationException;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
@@ -40,6 +41,8 @@ interface FactoryInterface
      *
      * @param Collection $collection
      * @param array      $options
+     *
+     * @throws ConfigurationException if schema not found or guessed
      *
      * @return Grid
      */

@@ -2,6 +2,7 @@
 
 namespace Jfsimon\Datagrid\Infra\Formatter;
 
+use Jfsimon\Datagrid\Exception\FormatterException;
 use Jfsimon\Datagrid\Service\FormatterInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,7 +36,7 @@ class DateTimeFormatter implements FormatterInterface
         }
 
         if (!$value instanceof \DateTime) {
-            throw new \InvalidArgumentException('Value must be DateTime instance.');
+            throw FormatterException::invalidType($this, $value, 'DateTime instance');
         }
 
         $dateTime = clone $value;
@@ -50,7 +51,7 @@ class DateTimeFormatter implements FormatterInterface
         $value = $formatter->format((int) $dateTime->format('U'));
 
         if (intl_get_error_code() != 0) {
-            throw new \RuntimeException(intl_get_error_message());
+            throw FormatterException::intlError($this, intl_get_error_message());
         }
 
         return $value;
