@@ -125,9 +125,9 @@ class Grid extends AbstractComponent
     protected function getDefaultOptions()
     {
         return array(
-            'head'     => true,
-            'foot'     => true,
-            'caption'  => true,
+            'head'     => !$this->children['head']->isEmpty(),
+            'foot'     => !$this->children['foot']->isEmpty(),
+            'caption'  => strlen($this->caption) > 0,
         );
     }
 

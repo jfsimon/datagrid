@@ -20,6 +20,7 @@ Work in progress
 - [x] Write some tests
 - [x] Improve exceptions (classes & messages)
 - [x] Implement a labels extension
+- [ ] Add acceptance tests
 - [ ] Add sorting capability to labels
 - [ ] Implement a debug extension
 - [ ] Implement a Doctrine factory

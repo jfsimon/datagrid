@@ -59,6 +59,16 @@ class Section extends AbstractComponent
     }
 
     /**
+     * Tests if section is empty.
+     *
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return 0 === count($this->children);
+    }
+
+    /**
      * @return Grid|null
      */
     public function getGrid()
