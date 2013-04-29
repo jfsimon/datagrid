@@ -70,7 +70,7 @@ Personal objectives
 - Create a well coded component using Domain Development Design
 - Make it highly extensible using open-close principle
 - Depend on strong libraries to keep code lightweight
-- Keep it open-source because I believe in it
+- Keep it open-source because I believe in it (license MIT)
 - Get a good tests code coverage (not so easy)
 
 
