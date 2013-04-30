@@ -58,6 +58,18 @@ class Factory implements FactoryInterface
     /**
      * {@inheritdoc}
      */
+    public function removeExtension($name)
+    {
+        if (isset($this->extensions[$name])) {
+            unset($this->extensions[$name]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function createGrid(Collection $collection, array $options = array())
     {
         $extensions = $this->getExtensions();

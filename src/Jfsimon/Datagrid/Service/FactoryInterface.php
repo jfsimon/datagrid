@@ -25,6 +25,15 @@ interface FactoryInterface
     public function register(ExtensionInterface $extension, $priority = 0);
 
     /**
+     * Removes an extension.
+     *
+     * @param string $name
+     *
+     * @return FactoryInterface
+     */
+    public function removeExtension($name);
+
+    /**
      * Creates a column for given type & options.
      *
      * @param string $type
