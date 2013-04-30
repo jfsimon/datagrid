@@ -19,9 +19,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Factory implements FactoryInterface
 {
     /**
-     * @var ExtensionInterface[]
+     * @var array
      */
     private $extensions = array();
+
+    /**
+     * @var boolean
+     */
+    private $sorted = true;
 
     /**
      * Constructor.
@@ -38,10 +43,14 @@ class Factory implements FactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function register(ExtensionInterface $extension)
+    public function register(ExtensionInterface $extension, $priority = 0)
     {
-        // todo: maybe add a priority system
-        $this->extensions[$extension->getName()] = $extension;
+        $this->sorted = false;
+        $this->extensions[$extension->getName()] = array(
+            'extension' => $extension,
+            'priority'  => $priority,
+            'index'     => count($this->extensions),
+        );
 
         return $this;
     }
@@ -51,14 +60,18 @@ class Factory implements FactoryInterface
      */
     public function createGrid(Collection $collection, array $options = array())
     {
+        $extensions = $this->getExtensions();
+
+        // resolve options
         $resolver = new OptionsResolver();
-        foreach ($this->extensions as $extension) {
+        foreach ($extensions as $extension) {
             $extension->configure($resolver);
         }
         $options = $resolver->resolve($options);
 
+        // read schema
         $schema = null;
-        foreach ($this->extensions as $extension) {
+        foreach ($extensions as $extension) {
             $schema = $extension->guessSchema($collection->getPeek(), $options);
             if (null !== $schema) {
                 break;
@@ -68,18 +81,22 @@ class Factory implements FactoryInterface
             throw ConfigurationException::schemaNotFound(array_keys($this->extensions));
         }
 
+        // create grid
         $grid = new Grid();
         $schema->bind($this, $grid);
 
-        foreach ($this->extensions as $extension) {
+        // build schema: extensions are able to manipulate schema columns
+        foreach ($extensions as $extension) {
             $extension->buildSchema($schema, $collection, $options);
         }
 
-        foreach ($this->extensions as $extension) {
+        // build grid: extensions are responsible of adding rows
+        foreach ($extensions as $extension) {
             $extension->buildGrid($grid, $schema, $collection, $options);
         }
 
-        foreach ($this->extensions as $extension) {
+        // visit model: visitors are able to manipulate AST
+        foreach ($extensions as $extension) {
             $extension->visit($grid, $options);
         }
 
@@ -89,13 +106,34 @@ class Factory implements FactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createColumn($type, array $options = array(), array $columnOptions = array())
+    public function createColumn($type, array $globalOptions = array(), array $columnOptions = array())
     {
         $column = new Column();
-        foreach ($this->extensions as $extension) {
-            $extension->buildColumn($column, $type, $options);
+        foreach ($this->getExtensions() as $extension) {
+            $extension->buildColumn($column, $type, $globalOptions);
         }
 
         return $column->configure($columnOptions);
+    }
+
+    /**
+     * Returns sorted list of extensions.
+     *
+     * @return ExtensionInterface[]
+     */
+    private function getExtensions()
+    {
+        if (!$this->sorted) {
+            usort($this->extensions, function (array $a, array $b) {
+                return $a['priority'] === $b['priority']
+                    ? ($a['index'] > $b['index'] ? 1 : -1)
+                    : ($a['priority'] > $b['priority'] ? -1 : 1);
+            });
+            $this->sorted = true;
+        }
+
+        return array_map(function (array $entry) {
+            return $entry['extension'];
+        }, $this->extensions);
     }
 }

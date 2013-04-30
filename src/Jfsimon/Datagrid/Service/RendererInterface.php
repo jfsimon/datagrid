@@ -14,8 +14,9 @@ interface RendererInterface
     /**
      * Renders a grid component.
      *
-     * Common options are:
-     * * template: string, path to the skin template
+     * Renderer tries to render templates in given order.
+     * If a template is not found, the next will be tried.
+     * This permits to override generic template for specific component.
      *
      * @param array $templates
      * @param array $context
@@ -25,5 +26,5 @@ interface RendererInterface
      *
      * @return string
      */
-    public function render(array $templates, array $context,  array $options = array());
+    public function render(array $templates, array $context, array $options = array());
 }

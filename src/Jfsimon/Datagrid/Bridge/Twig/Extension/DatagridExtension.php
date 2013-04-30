@@ -11,21 +11,16 @@ use Jfsimon\Datagrid\Model\Component\ComponentInterface;
 class DatagridExtension extends \Twig_Extension
 {
     /**
-     * @var string
-     */
-    private $defaultTemplate;
-
-    /**
      * @var TwigRenderer
      */
     private $renderer;
 
     /**
-     * @param string $defaultTemplate
+     * @param TwigRenderer $renderer
      */
-    public function __construct($defaultTemplate)
+    public function __construct(TwigRenderer $renderer)
     {
-        $this->defaultTemplate = $defaultTemplate;
+        $this->renderer = $renderer;
     }
 
     /**
@@ -33,7 +28,7 @@ class DatagridExtension extends \Twig_Extension
      */
     public function initRuntime(\Twig_Environment $environment)
     {
-        $this->renderer = new TwigRenderer($environment, $this->defaultTemplate);
+        $this->renderer->setTwigEnvironment($environment);
     }
 
     /**

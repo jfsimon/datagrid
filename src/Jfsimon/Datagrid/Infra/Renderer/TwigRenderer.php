@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Renderer;
 
 use Jfsimon\Datagrid\Exception\TemplateException;
+use Jfsimon\Datagrid\Exception\WorkflowException;
 use Jfsimon\Datagrid\Service\RendererInterface;
 
 /**
@@ -23,13 +24,25 @@ class TwigRenderer implements RendererInterface
     /**
      * Constructor.
      *
-     * @param \Twig_Environment $twigEnvironment
-     * @param string|null       $defaultTemplate
+     * @param string $defaultTemplate
      */
-    public function __construct(\Twig_Environment $twigEnvironment, $defaultTemplate)
+    public function __construct($defaultTemplate)
+    {
+        $this->defaultTemplate = $defaultTemplate;
+    }
+
+    /**
+     * Registers the Twig environment.
+     *
+     * @param \Twig_Environment $twigEnvironment
+     *
+     * @return TwigRenderer
+     */
+    public function setTwigEnvironment(\Twig_Environment $twigEnvironment)
     {
         $this->twigEnvironment = $twigEnvironment;
-        $this->defaultTemplate = $defaultTemplate;
+
+        return $this;
     }
 
     /**
@@ -53,10 +66,15 @@ class TwigRenderer implements RendererInterface
      *
      * @return \Twig_Template
      *
+     * @throws WorkflowException
      * @throws TemplateException
      */
     private function loadTemplate($template = null)
     {
+        if (null === $this->twigEnvironment) {
+            throw WorkflowException::twigNotDefined();
+        }
+
         $template = $template ?: $this->defaultTemplate;
 
         try {

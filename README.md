@@ -9,7 +9,7 @@ Backlog
 
 - [x] as a user I want to render a collection of strings (in-memory arrays) as an HTML table
 - [ ] as a user I want to render a collection of mixed data (string, number, datetime) (in-memory arrays) as an HTML table
-- [ ] as a user I want to get columns name in header
+- [x] as a user I want to get columns name in header
 - [ ] as a user I want to automatically display CRUD links on each row
 
 Icebox
@@ -46,9 +46,8 @@ $schema
 ;
 
 $factory = new Factory();
-$html = $factory
-    ->createGrid(new Collection($quarks), array('schema' => $schema))
-    ->render(new TwigRenderer($this->getTwig(), 'default.html.twig'));
+$grid = $factory->createGrid(new Collection($quarks), array('schema' => $schema));
+$html = $this->getTwig()->render('{{ datagrid(grid) }}', array('grid' => $grid));
 ```
 
 Usage with Doctrine

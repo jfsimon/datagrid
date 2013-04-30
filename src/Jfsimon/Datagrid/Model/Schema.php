@@ -102,13 +102,13 @@ class Schema
     /**
      * Creates columns.
      *
-     * @param array $options
+     * @param array $globalOptions
      *
      * @throws WorkflowException
      *
      * @return Column[]
      */
-    private function getColumns(array $options)
+    private function getColumns(array $globalOptions)
     {
         if (null !== $this->columns) {
             return $this->columns;
@@ -122,7 +122,7 @@ class Schema
 
         foreach ($this->types as $name => $bits) {
             list($type, $columnOptions) = $bits;
-            $this->columns[$name] = $this->factory->createColumn($type, $options, $columnOptions);
+            $this->columns[$name] = $this->factory->createColumn($type, $globalOptions, $columnOptions);
         }
 
         return $this->columns;

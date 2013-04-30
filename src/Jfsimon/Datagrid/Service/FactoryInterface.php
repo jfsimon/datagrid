@@ -18,20 +18,22 @@ interface FactoryInterface
      * Registers an extension.
      *
      * @param ExtensionInterface $extension
+     * @param int                $priority
      *
      * @return FactoryInterface
      */
-    public function register(ExtensionInterface $extension);
+    public function register(ExtensionInterface $extension, $priority = 0);
 
     /**
      * Creates a column for given type & options.
      *
      * @param string $type
-     * @param array  $options
+     * @param array  $globalOptions
+     * @param array  $columnOptions
      *
      * @return Column
      */
-    public function createColumn($type, array $options = array());
+    public function createColumn($type, array $globalOptions = array(), array $columnOptions = array());
 
     /**
      * Creates a grid for given data collection & options.

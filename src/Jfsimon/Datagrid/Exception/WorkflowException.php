@@ -4,7 +4,6 @@ namespace Jfsimon\Datagrid\Exception;
 
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\ComponentInterface;
-use Jfsimon\Datagrid\Model\Schema;
 
 /**
  * @author Jean-François Simon <contact@jfsimon.fr>
@@ -65,5 +64,15 @@ class WorkflowException extends AbstractException
             'Column "%s" is not configured and can not process %s operation.',
             $column->getName(), $operation
         ));
+    }
+
+    /**
+     * Twig environment has not been registered.
+     *
+     * @return WorkflowException
+     */
+    public static function twigNotDefined()
+    {
+        return new self('Twig environment must be defined before template loading.');
     }
 }
