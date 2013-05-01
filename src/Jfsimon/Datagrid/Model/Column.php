@@ -86,6 +86,12 @@ class Column
             $handler->configure($resolver);
         }
 
+        foreach (array_keys($options) as $name) {
+            if (!$resolver->isKnown($name)) {
+                unset($options[$name]);
+            }
+        }
+
         $this->options = $resolver->resolve($options);
 
         return $this;

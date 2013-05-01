@@ -7,6 +7,8 @@ use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Schema;
 use Jfsimon\Datagrid\Tests\Acceptance\AcceptanceTest;
 use Jfsimon\Datagrid\Tests\Acceptance\ArrayDataProvider;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Component\Translation\Translator;
 
 class LabelTest extends AcceptanceTest
 {
@@ -31,6 +33,23 @@ class LabelTest extends AcceptanceTest
 
         $grid = $this->getFactory()->createGrid($collection, array('schema' => $schema));
         $html = $this->getTwig()->render('{{ datagrid(grid) }}', array('grid' => $grid));
+
+        $this->assertFixtureEquals(__DIR__.'/beatles.html', $html);
+    }
+
+    public function testWhenISetupTranslationIGetTranslatedLabels()
+    {
+        $collection = new Collection(ArrayDataProvider::getBeatlesData());
+        $schema = ArrayDataProvider::buildBeatlesSchema(new Schema());
+
+        $grid = $this->getFactory()->createGrid($collection, array(
+            'schema'      => $schema,
+            'name'        => 'beatles',
+            'label_trans' => true,
+        ));
+        $html = $this
+            ->getTwig('trans.html.twig', array(new TranslationExtension($this->getTranslator(__DIR__))))
+            ->render('{{ datagrid(grid) }}', array('grid' => $grid));
 
         $this->assertFixtureEquals(__DIR__.'/beatles.html', $html);
     }

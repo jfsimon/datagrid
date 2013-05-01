@@ -120,15 +120,14 @@ class Factory implements FactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createColumn($type, array $globalOptions = array(), array $columnOptions = array())
+    public function createColumn($type, array $options = array())
     {
         $column = new Column();
         foreach ($this->getExtensions() as $extension) {
-            $options = array_replace($globalOptions, $columnOptions);
             $extension->buildColumn($column, $type, $options);
         }
 
-        return $column->configure($columnOptions);
+        return $column->configure($options);
     }
 
     /**

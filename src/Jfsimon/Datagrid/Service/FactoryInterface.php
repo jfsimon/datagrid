@@ -37,12 +37,11 @@ interface FactoryInterface
      * Creates a column for given type & options.
      *
      * @param string $type
-     * @param array  $globalOptions
-     * @param array  $columnOptions
+     * @param array  $options
      *
      * @return Column
      */
-    public function createColumn($type, array $globalOptions = array(), array $columnOptions = array());
+    public function createColumn($type, array $options = array());
 
     /**
      * Creates a grid for given data collection & options.

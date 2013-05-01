@@ -142,7 +142,7 @@ class Schema
         $this->columns = array();
 
         foreach ($this->types as $name => $type) {
-            $this->columns[$name] = $this->factory->createColumn($type['name'], $globalOptions, $type['options']);
+            $this->columns[$name] = $this->factory->createColumn($type['name'], array_merge($globalOptions, $type['options']));
         }
 
         return $this->columns;

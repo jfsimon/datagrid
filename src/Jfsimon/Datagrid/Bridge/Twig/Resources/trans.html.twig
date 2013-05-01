@@ -1,0 +1,7 @@
+{% use "default.html.twig" %}
+
+{% block labelCell %}
+{% spaceless %}
+    <th{{ attributes|raw }}>{{ trans_enabled ? label|trans({}, trans_domain) : label }}</th>
+{% endspaceless %}
+{% endblock labelCell %}
