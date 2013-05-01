@@ -11,6 +11,9 @@ Backlog
 - [x] as a user I want to render a collection of mixed data (string, number, datetime) (in-memory arrays) as an HTML table
 - [x] as a user I want to get columns name in header
 - [x] as a user I want to automatically display CRUD links on each row
+- [ ] as a user I want to be able to translate labels
+- [ ] as a user I want to be able to translate actions labels
+- [ ] as a user I want to be able to add classes to HTML tags
 
 Icebox
 ------
@@ -85,6 +88,8 @@ Personal todo list
 - [x] Implement a labels extension
 - [x] Implement an actions extension
 - [x] Add acceptance tests
+- [ ] Add translator support
+- [ ] Add HTML class visitor
 - [ ] Add sorting capability to labels
 - [ ] Implement a debug extension
 - [ ] Implement a Doctrine factory

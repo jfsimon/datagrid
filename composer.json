@@ -2,15 +2,20 @@
     "name": "jfsimon/datagrid",
     "description": "A PHP datagrid component",
     "require": {
-        "symfony/options-resolver": "2.2.*",
-        "symfony/property-access": "2.2.*"
+        "symfony/options-resolver": ">=2.1",
+        "symfony/property-access": ">=2.2"
     },
     "authors": [{
         "name": "Jean-François Simon",
         "email": "contact@jfsimon.fr"
     }],
     "require-dev": {
-        "twig/twig": "1.12.3"
+        "twig/twig": ">=1",
+        "symfony/translation": ">=2.1",
+        "symfony/config": ">=2.1",
+        "symfony/yaml": ">=2.1",
+        "symfony/twig-bridge": ">=2.1",
+        "symfony/finder": ">=2.1"
     },
     "autoload": {
         "psr-0": { "Jfsimon\\Datagrid": "src/" }
