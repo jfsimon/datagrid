@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Infra\Factory;
 
 use Jfsimon\Datagrid\Exception\ConfigurationException;
+use Jfsimon\Datagrid\Infra\Extension\ActionsExtension;
 use Jfsimon\Datagrid\Infra\Extension\CoreExtension;
 use Jfsimon\Datagrid\Infra\Extension\DataExtension;
 use Jfsimon\Datagrid\Infra\Extension\LabelExtension;
@@ -34,9 +35,10 @@ class Factory implements FactoryInterface
     public function __construct()
     {
         $this
-            ->register(new CoreExtension())
-            ->register(new DataExtension())
-            ->register(new LabelExtension())
+            ->register(new CoreExtension(), 100)
+            ->register(new DataExtension(), 0)
+            ->register(new LabelExtension(), -50)
+            ->register(new ActionsExtension(), 50)
         ;
     }
 

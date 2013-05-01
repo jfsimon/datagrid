@@ -3,7 +3,7 @@
 namespace Jfsimon\Datagrid\Model;
 
 use Jfsimon\Datagrid\Exception\WorkflowException;
-use Jfsimon\Datagrid\Model\Component\Cell;
+use Jfsimon\Datagrid\Model\Component\Cell\EmptyCell;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Entity;
@@ -57,6 +57,24 @@ class Column
     }
 
     /**
+     * Tests if handler exists for given row type.
+     *
+     * @param string $type
+     *
+     * @return boolean
+     */
+    public function hasHandler($type)
+    {
+        foreach ($this->handlers as $handler) {
+            if ($handler->getType() === $type) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param array  $options
      *
      * @return Column
@@ -103,7 +121,7 @@ class Column
 
         $cell = isset($this->handlers[$row->getType()])
             ? $this->handlers[$row->getType()]->handle($this, $entity, $this->options)
-            : new Cell();
+            : new EmptyCell();
 
         $row->add($this->name, $cell);
 

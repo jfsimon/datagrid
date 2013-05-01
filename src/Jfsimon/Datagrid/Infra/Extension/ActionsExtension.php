@@ -3,7 +3,8 @@
 namespace Jfsimon\Datagrid\Infra\Extension;
 
 use Jfsimon\Datagrid\Infra\Extension\AbstractExtension;
-use Jfsimon\Datagrid\Infra\Handler\ActionsHandler;
+use Jfsimon\Datagrid\Infra\Handler\DataActionsHandler;
+use Jfsimon\Datagrid\Infra\Handler\LabelActionsHandler;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Schema;
@@ -21,7 +22,10 @@ class ActionsExtension extends AbstractExtension
      */
     public function configure(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(self::NAME => null));
+        $resolver
+            ->setDefaults(array(self::NAME => null))
+            ->addAllowedTypes(array(self::NAME => 'Jfsimon\Datagrid\Model\Content\Actions'))
+        ;
     }
 
     /**
@@ -30,7 +34,7 @@ class ActionsExtension extends AbstractExtension
     public function buildSchema(Schema $schema, Collection $collection, array $options = array())
     {
         if ($options[self::NAME]) {
-            $schema->add('.'.self::NAME, self::NAME);
+            $schema->add('.'.self::NAME, self::NAME, array(self::NAME => $options[self::NAME]));
         }
     }
 
@@ -40,7 +44,10 @@ class ActionsExtension extends AbstractExtension
     public function buildColumn(Column $column, $type, array $options = array())
     {
         if (self::NAME === $type) {
-            $column->register(new ActionsHandler());
+            $column
+                ->register(new DataActionsHandler(), true)
+                ->register(new LabelActionsHandler(), true)
+            ;
         }
     }
 

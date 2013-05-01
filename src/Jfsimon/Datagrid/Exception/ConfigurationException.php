@@ -21,4 +21,9 @@ class ConfigurationException extends AbstractException
             implode('", "', $extensionNames)
         ));
     }
+
+    public static function undefinedOption($option)
+    {
+        return new self(sprintf('Option "'.$option.'" must be defined.'));
+    }
 }

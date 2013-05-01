@@ -24,8 +24,8 @@ class Row extends AbstractComponent
     /**
      * Constructor.
      *
-     * @param string $type
-     * @param Cell[] $cells
+     * @param string          $type
+     * @param CellInterface[] $cells
      */
     public function __construct($type, array $cells = array())
     {
@@ -39,12 +39,12 @@ class Row extends AbstractComponent
     /**
      * Adds a cell.
      *
-     * @param string $name
-     * @param Cell   $cell
+     * @param string        $name
+     * @param CellInterface $cell
      *
      * @return Section
      */
-    public function add($name, Cell $cell)
+    public function add($name, CellInterface $cell)
     {
         $this->children[$name] = $cell->bind($this, $name);
 
@@ -88,7 +88,12 @@ class Row extends AbstractComponent
      */
     protected function getRendererTemplates()
     {
-        return array($this->section->getName().ucfirst($this->type).'Row', $this->type.'Row', 'row');
+        return array(
+            $this->section->getGrid()->getName().ucfirst($this->section->getName()).ucfirst($this->type).'Row',
+            $this->section->getName().ucfirst($this->type).'Row',
+            $this->type.'Row',
+            'row'
+        );
     }
 
     /**

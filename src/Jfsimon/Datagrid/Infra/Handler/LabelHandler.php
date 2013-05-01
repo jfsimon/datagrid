@@ -5,7 +5,7 @@ namespace Jfsimon\Datagrid\Infra\Handler;
 use Jfsimon\Datagrid\Infra\Extension\LabelExtension;
 use Jfsimon\Datagrid\Infra\Formatter\LabelFormatter;
 use Jfsimon\Datagrid\Model\Column;
-use Jfsimon\Datagrid\Model\Component\Cell;
+use Jfsimon\Datagrid\Model\Component\Cell\LabelCell;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,7 +34,7 @@ class LabelHandler implements HandlerInterface
     public function handle(Column $column, Entity $entity = null, array $options = array())
     {
         if ($options[LabelExtension::NAME.'_trans']) {
-            $cell = new Cell(strtr($options[LabelExtension::NAME.'_trans_pattern'], array(
+            $cell = new LabelCell(strtr($options[LabelExtension::NAME.'_trans_pattern'], array(
                 '{grid}'   => $column->getGrid()->getName(),
                 '{column}' => $column->getName(),
             )), true);
@@ -42,7 +42,7 @@ class LabelHandler implements HandlerInterface
             $cell->vars['trans_domain'] = $options[LabelExtension::NAME.'_trans_domain'];
         } else {
             $formatter = new LabelFormatter();
-            $cell = new Cell($formatter->format($column->getName()), true);
+            $cell = new LabelCell($formatter->format($column->getName()), true);
         }
 
         return $cell;

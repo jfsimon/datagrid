@@ -50,12 +50,30 @@
 {% endspaceless %}
 {% endblock row %}
 
-{% block cell %}
+{% block emptyCell %}
 {% spaceless %}
-    {% if heading %}
-        <th{{ attributes|raw }}>{{ content }}</th>
-    {% else %}
-        <td{{ attributes|raw }}>{{ content }}</td>
-    {% endif %}
+    <td{{ attributes|raw }}></td>
 {% endspaceless %}
-{% endblock cell %}
+{% endblock emptyCell %}
+
+{% block dataCell %}
+{% spaceless %}
+    <td{{ attributes|raw }}>{{ content }}</td>
+{% endspaceless %}
+{% endblock dataCell %}
+
+{% block labelCell %}
+{% spaceless %}
+    <th{{ attributes|raw }}>{{ label }}</th>
+{% endspaceless %}
+{% endblock labelCell %}
+
+{% block actionsCell %}
+{% spaceless %}
+    <td{{ attributes|raw }}><ul>
+        {% for action in actions %}
+            <li><a href="{{ action.url }}">{{ action.label }}</a></li>
+        {% endfor %}
+    </ul></td>
+{% endspaceless %}
+{% endblock actionsCell %}

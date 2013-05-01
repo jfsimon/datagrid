@@ -67,6 +67,10 @@ class DataExtension extends AbstractExtension
      */
     public function buildColumn(Column $column, $type, array $options = array())
     {
+        if ($column->hasHandler(self::NAME)) {
+            return;
+        }
+
         if (!isset($this->formatters[$type])) {
             throw FormatterException::notFound($type, array_keys($this->formatters));
         }

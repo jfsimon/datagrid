@@ -10,7 +10,7 @@ Backlog
 - [x] as a user I want to render a collection of strings (in-memory arrays) as an HTML table
 - [ ] as a user I want to render a collection of mixed data (string, number, datetime) (in-memory arrays) as an HTML table
 - [x] as a user I want to get columns name in header
-- [ ] as a user I want to automatically display CRUD links on each row
+- [x] as a user I want to automatically display CRUD links on each row
 
 Icebox
 ------
@@ -83,6 +83,7 @@ Personal todo list
 - [x] Write some tests
 - [x] Improve exceptions (classes & messages)
 - [x] Implement a labels extension
+- [x] Implement an actions extension
 - [ ] Add acceptance tests
 - [ ] Add sorting capability to labels
 - [ ] Implement a debug extension
