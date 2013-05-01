@@ -11,7 +11,7 @@ use Jfsimon\Datagrid\Tests\Acceptance\ArrayDataProvider;
 
 class ActionsTest extends AcceptanceTest
 {
-    public function testWhenIRenderStringsCollectionIGetAnHtmlTableWithStringsAndLabelsAndCrudActions()
+    public function testWhenISetupActionsIGetLinksInTable()
     {
         $collection = new Collection(ArrayDataProvider::getQuarksData());
         $schema = ArrayDataProvider::buildQuarksSchema(new Schema());

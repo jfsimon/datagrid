@@ -21,6 +21,17 @@ class DataTest extends AcceptanceTest
         $this->assertFixtureEquals(__DIR__.'/quarks.html', $html);
     }
 
+    public function testWhenIRenderMixedDataCollectionIGetAnHtmlTableWithFormattedData()
+    {
+        $collection = new Collection(ArrayDataProvider::getBeatlesData());
+        $schema = ArrayDataProvider::buildBeatlesSchema(new Schema());
+
+        $grid = $this->getFactory()->createGrid($collection, array('schema' => $schema));
+        $html = $this->getTwig()->render('{{ datagrid(grid) }}', array('grid' => $grid));
+
+        $this->assertFixtureEquals(__DIR__.'/beatles.html', $html);
+    }
+
     private function getFactory()
     {
         $factory = new Factory();

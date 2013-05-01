@@ -20,7 +20,7 @@ class ActionsTest extends \PHPUnit_Framework_TestCase
         $method = new \ReflectionMethod($actions, 'resolveEntityUrl');
         $method->setAccessible(true);
         $url = $method->invoke($actions, $pattern, $entity);
-        
+
         $this->assertEquals($expectation, $url);
     }
 

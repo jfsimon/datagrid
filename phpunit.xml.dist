@@ -12,8 +12,15 @@
          bootstrap="tests/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="Full Datagrid Test Suite">
+        <testsuite name="All tests">
             <directory>./tests/Jfsimon/Datagrid/Tests/</directory>
+        </testsuite>
+        <testsuite name="Unit tests">
+            <directory>./tests/Jfsimon/Datagrid/Tests/Model</directory>
+            <directory>./tests/Jfsimon/Datagrid/Tests/Infra</directory>
+        </testsuite>
+        <testsuite name="Acceptance tests">
+            <directory>./tests/Jfsimon/Datagrid/Tests/Acceptance</directory>
         </testsuite>
     </testsuites>
 

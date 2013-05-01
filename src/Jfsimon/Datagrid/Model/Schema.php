@@ -44,8 +44,29 @@ class Schema
      */
     public function add($name, $type, array $options = array())
     {
-        $this->types[$name] = array($type, $options);
+        $this->types[$name] = array('name' => $type, 'options' => $options);
         $this->columns = null;
+
+        return $this;
+    }
+
+    /**
+     * Merges named column options.
+     *
+     * @param string $name
+     * @param array  $options
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return Schema
+     */
+    public function setOptions($name, array $options)
+    {
+        if (!isset($this->types[$name])) {
+            throw new \InvalidArgumentException('Invalid name');
+        }
+
+        $this->types[$name]['options'] = array_merge($this->types[$name]['options'], $options);
 
         return $this;
     }
@@ -120,9 +141,8 @@ class Schema
 
         $this->columns = array();
 
-        foreach ($this->types as $name => $bits) {
-            list($type, $columnOptions) = $bits;
-            $this->columns[$name] = $this->factory->createColumn($type, $globalOptions, $columnOptions);
+        foreach ($this->types as $name => $type) {
+            $this->columns[$name] = $this->factory->createColumn($type['name'], $globalOptions, $type['options']);
         }
 
         return $this->columns;

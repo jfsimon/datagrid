@@ -124,7 +124,8 @@ class Factory implements FactoryInterface
     {
         $column = new Column();
         foreach ($this->getExtensions() as $extension) {
-            $extension->buildColumn($column, $type, $globalOptions);
+            $options = array_replace($globalOptions, $columnOptions);
+            $extension->buildColumn($column, $type, $options);
         }
 
         return $column->configure($columnOptions);
