@@ -2,8 +2,6 @@
 
 namespace Jfsimon\Datagrid\Model\Component;
 
-use Jfsimon\Datagrid\Model\Component\Cell\CellInterface;
-
 /**
  * Section component compound with rows.
  *
@@ -24,8 +22,8 @@ class Row extends AbstractComponent
     /**
      * Constructor.
      *
-     * @param string          $type
-     * @param CellInterface[] $cells
+     * @param string $type
+     * @param Cell[] $cells
      */
     public function __construct($type, array $cells = array())
     {
@@ -39,12 +37,12 @@ class Row extends AbstractComponent
     /**
      * Adds a cell.
      *
-     * @param string        $name
-     * @param CellInterface $cell
+     * @param string $name
+     * @param Cell   $cell
      *
      * @return Section
      */
-    public function add($name, CellInterface $cell)
+    public function add($name, Cell $cell)
     {
         $this->children[$name] = $cell->bind($this, $name);
 

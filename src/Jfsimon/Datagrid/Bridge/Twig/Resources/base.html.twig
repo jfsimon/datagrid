@@ -58,22 +58,52 @@
 
 {% block dataCell %}
 {% spaceless %}
-    <td{{ attributes|raw }}>{{ content }}</td>
+    <td{{ attributes|raw }}>{{ datagrid(data, options) }}</td>
 {% endspaceless %}
 {% endblock dataCell %}
 
 {% block labelCell %}
 {% spaceless %}
-    <th{{ attributes|raw }}>{{ label }}</th>
+    <th{{ attributes|raw }}>{{ datagrid(label, options) }}</th>
 {% endspaceless %}
 {% endblock labelCell %}
 
-{% block actionsCell %}
+{% block collectionCell %}
 {% spaceless %}
-    <td{{ attributes|raw }}><ul>
-        {% for action in actions %}
-            <li><a href="{{ action.url }}">{{ action.label }}</a></li>
-        {% endfor %}
-    </ul></td>
+    <td{{ attributes|raw }}>{{ datagrid(collection, options) }}</td>
 {% endspaceless %}
-{% endblock actionsCell %}
+{% endblock collectionCell %}
+
+{% block data %}
+{% spaceless %}
+    {{ value }}
+{% endspaceless %}
+{% endblock data %}
+
+{% block label %}
+{% spaceless %}
+    {{ text }}
+{% endspaceless %}
+{% endblock label %}
+
+{% block url %}
+{% spaceless %}
+    {{ url }}
+{% endspaceless %}
+{% endblock url %}
+
+{% block link %}
+{% spaceless %}
+    <a{{ attributes|raw }} href="{{ datagrid(url) }}">{{ datagrid(label, options) }}</a>
+{% endspaceless %}
+{% endblock link %}
+
+{% block collection %}
+{% spaceless %}
+    <ul>
+        {% for item in collection %}
+            <li>{{ datagrid(item, options) }}</li>
+        {% endfor %}
+    </ul>
+{% endspaceless %}
+{% endblock collection %}

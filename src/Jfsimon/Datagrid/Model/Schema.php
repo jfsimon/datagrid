@@ -34,6 +34,14 @@ class Schema
     private $grid;
 
     /**
+     * @return Schema
+     */
+    public static function create()
+    {
+        return new self();
+    }
+
+    /**
      * Adds a column type.
      *
      * @param string        $name

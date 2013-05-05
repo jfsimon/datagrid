@@ -24,7 +24,7 @@ class ActionsExtension extends AbstractExtension
     {
         $resolver
             ->setDefaults(array(self::NAME => null))
-            ->addAllowedTypes(array(self::NAME => 'Jfsimon\Datagrid\Model\Content\Actions'))
+            ->addAllowedTypes(array(self::NAME => 'Jfsimon\Datagrid\Model\Actions'))
         ;
     }
 

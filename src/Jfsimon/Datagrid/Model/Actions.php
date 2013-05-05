@@ -1,6 +1,6 @@
 <?php
 
-namespace Jfsimon\Datagrid\Model\Content;
+namespace Jfsimon\Datagrid\Model;
 
 use Jfsimon\Datagrid\Model\Data\Entity;
 

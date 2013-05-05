@@ -16,7 +16,7 @@ abstract class AcceptanceTest extends \PHPUnit_Framework_TestCase
         \Locale::setDefault('en_US');
     }
 
-    protected function getTwig($template = 'default.html.twig', array $extensions = array())
+    protected function getTwig($template = 'base.html.twig', array $extensions = array())
     {
         $twig = new \Twig_Environment(new \Twig_Loader_Chain(array(
             new \Twig_Loader_Filesystem(realpath(__DIR__.'/../../../../../src/Jfsimon/Datagrid/Bridge/Twig/Resources')),

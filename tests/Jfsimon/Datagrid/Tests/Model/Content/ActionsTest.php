@@ -2,7 +2,7 @@
 
 namespace Jfsimon\Datagrid\Tests\Model\Content;
 
-use Jfsimon\Datagrid\Model\Content\Actions;
+use Jfsimon\Datagrid\Model\Actions;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 

@@ -5,8 +5,8 @@ namespace Jfsimon\Datagrid\Infra\Handler;
 use Jfsimon\Datagrid\Infra\Extension\LabelExtension;
 use Jfsimon\Datagrid\Infra\Formatter\LabelFormatter;
 use Jfsimon\Datagrid\Model\Column;
-use Jfsimon\Datagrid\Model\Component\Cell\EmptyCell;
-use Jfsimon\Datagrid\Model\Component\Cell\LabelCell;
+use Jfsimon\Datagrid\Model\Component\Cell;
+use Jfsimon\Datagrid\Model\Component\Label;
 use Jfsimon\Datagrid\Model\Data\Entity;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,30 +36,27 @@ class LabelHandler implements HandlerInterface
     {
         // translator enabled
         if ($options[LabelExtension::NAME.'_trans']) {
-            $cell = new LabelCell(strtr($options[LabelExtension::NAME.'_trans_pattern'], array(
+            $label = strtr($options[LabelExtension::NAME.'_trans_pattern'], array(
                 '{grid}'   => $column->getGrid()->getName(),
                 '{column}' => $column->getName(),
-            )));
+            ));
 
-            $cell->vars['trans_enabled'] = true;
-            $cell->vars['trans_domain'] = $options[LabelExtension::NAME.'_trans_domain'];
-
-            return $cell;
+            return new Cell(new Label($label, true, $options[LabelExtension::NAME.'_trans_domain']));
         }
 
         // custom label
         if (is_string($options[LabelExtension::NAME])) {
-            return new LabelCell($options[LabelExtension::NAME]);
+            return new Cell(new Label($options[LabelExtension::NAME]));
         }
 
         // label enabled
         if ($options[LabelExtension::NAME]) {
             $formatter = new LabelFormatter();
 
-            return new LabelCell($formatter->format($column->getName()));
+            return new Cell(new Label($formatter->format($column->getName())));
         }
 
-        return new EmptyCell();
+        return new Cell();
     }
 
     /**

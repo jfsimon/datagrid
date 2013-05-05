@@ -3,7 +3,7 @@
 namespace Jfsimon\Datagrid\Tests\Acceptance\Data;
 
 use Jfsimon\Datagrid\Infra\Factory\Factory;
-use Jfsimon\Datagrid\Model\Content\Actions;
+use Jfsimon\Datagrid\Model\Actions;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Schema;
 use Jfsimon\Datagrid\Tests\Acceptance\AcceptanceTest;

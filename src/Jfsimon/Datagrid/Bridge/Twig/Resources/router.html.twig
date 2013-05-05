@@ -1,0 +1,7 @@
+{% use "base.html.twig" %}
+
+{% block url %}
+{% spaceless %}
+    {{ router ? url(route, parameters) : url }}
+{% endspaceless %}
+{% endblock url %}

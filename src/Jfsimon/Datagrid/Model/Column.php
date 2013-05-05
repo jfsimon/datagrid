@@ -3,7 +3,7 @@
 namespace Jfsimon\Datagrid\Model;
 
 use Jfsimon\Datagrid\Exception\WorkflowException;
-use Jfsimon\Datagrid\Model\Component\Cell\EmptyCell;
+use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Component\Row;
 use Jfsimon\Datagrid\Model\Data\Entity;
@@ -127,7 +127,7 @@ class Column
 
         $cell = isset($this->handlers[$row->getType()])
             ? $this->handlers[$row->getType()]->handle($this, $entity, $this->options)
-            : new EmptyCell();
+            : new Cell();
 
         $row->add($this->name, $cell);
 
