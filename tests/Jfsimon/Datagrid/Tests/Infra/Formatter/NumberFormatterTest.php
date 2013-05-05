@@ -45,4 +45,10 @@ class NumberFormatterTest extends AbstractFormatterTest
         $this->assertFormat('1234,547', 1234.547, array('rounding_mode' => \NumberFormatter::ROUND_DOWN));
         $this->assertFormat('1234,54', 1234.547, array('precision' => 2, 'rounding_mode' => \NumberFormatter::ROUND_DOWN));
     }
+
+    public function testExceptionOnInvalidData()
+    {
+        $this->setExpectedException('Jfsimon\Datagrid\Exception\FormatterException');
+        $this->getFormatter()->format('invalid');
+    }
 }

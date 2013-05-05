@@ -13,7 +13,7 @@ class DataTest extends AcceptanceTest
     public function testWhenIRenderStringsCollectionIGetAnHtmlTableWithStrings()
     {
         $collection = new Collection(ArrayDataProvider::getQuarksData());
-        $schema = ArrayDataProvider::buildQuarksSchema(new Schema());
+        $schema = ArrayDataProvider::getQuarksSchema();
 
         $grid = $this->getFactory()->createGrid($collection, array('schema' => $schema));
         $html = $this->getTwig()->render('{{ datagrid(grid) }}', array('grid' => $grid));
@@ -24,7 +24,7 @@ class DataTest extends AcceptanceTest
     public function testWhenIRenderMixedDataCollectionIGetAnHtmlTableWithFormattedData()
     {
         $collection = new Collection(ArrayDataProvider::getBeatlesData());
-        $schema = ArrayDataProvider::buildBeatlesSchema(new Schema());
+        $schema = ArrayDataProvider::getBeatlesSchema();
 
         $grid = $this->getFactory()->createGrid($collection, array('schema' => $schema));
         $html = $this->getTwig()->render('{{ datagrid(grid) }}', array('grid' => $grid));

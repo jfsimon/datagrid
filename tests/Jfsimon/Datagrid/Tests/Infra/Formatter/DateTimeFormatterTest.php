@@ -70,4 +70,10 @@ class DateTimeFormatterTest extends AbstractFormatterTest
         $this->assertFormat('', null);
         $this->assertFormat('NULL', null, array('null_value' => 'NULL'));
     }
+
+    public function testExceptionOnInvalidData()
+    {
+        $this->setExpectedException('Jfsimon\Datagrid\Exception\FormatterException');
+        $this->getFormatter()->format('invalid');
+    }
 }

@@ -21,9 +21,9 @@ class ArrayDataProvider
         );
     }
 
-    public static function buildQuarksSchema(Schema $schema)
+    public static function getQuarksSchema()
     {
-        return $schema
+        return Schema::create()
             ->add('name', 'string')
             ->add('generation', 'string')
             ->add('charge', 'string')
@@ -41,9 +41,9 @@ class ArrayDataProvider
         );
     }
 
-    public static function buildBeatlesSchema(Schema $schema)
+    public static function getBeatlesSchema()
     {
-        return $schema
+        return Schema::create()
             ->add('name', 'string')
             ->add('birthday', 'datetime', array('time_format' => \IntlDateFormatter::NONE))
             ->add('alive', 'boolean', array('true_value' => 'yes :)', 'false_value' => 'no :('))

@@ -15,7 +15,7 @@ class ActionsTest extends AcceptanceTest
     public function testWhenISetupActionsIGetLinksInTable()
     {
         $collection = new Collection(ArrayDataProvider::getQuarksData());
-        $schema = ArrayDataProvider::buildQuarksSchema(new Schema());
+        $schema = ArrayDataProvider::getQuarksSchema();
 
         $actions = Actions::create()
             ->addGlobalAction('create', '/quarks/create')
@@ -33,7 +33,7 @@ class ActionsTest extends AcceptanceTest
     public function testWhenISetupTranslationIGetTranslatedActionLabels()
     {
         $collection = new Collection(ArrayDataProvider::getBeatlesData());
-        $schema = ArrayDataProvider::buildBeatlesSchema(new Schema());
+        $schema = ArrayDataProvider::getBeatlesSchema();
 
         $actions = Actions::create()
             ->addGlobalAction('create', '/beatles/create')

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jfsimon\Datagrid\Tests\Model\Content;
+namespace Jfsimon\Datagrid\Tests\Model;
 
 use Jfsimon\Datagrid\Model\Actions;
 use Jfsimon\Datagrid\Model\Data\Entity;

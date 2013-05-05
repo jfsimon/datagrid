@@ -30,6 +30,6 @@ class LabelFormatter implements FormatterInterface
      */
     public function getName()
     {
-        return 'string';
+        return 'label';
     }
 }

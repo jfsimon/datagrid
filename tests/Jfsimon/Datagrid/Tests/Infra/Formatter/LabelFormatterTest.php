@@ -18,4 +18,9 @@ class LabelFormatterTest extends AbstractFormatterTest
         $this->assertFormat('Hello world', 'HelloWorld');
         $this->assertFormat('Hello world', 'hello_world');
     }
+
+    public function testName()
+    {
+        $this->assertEquals('label', $this->getFormatter()->getName());
+    }
 }

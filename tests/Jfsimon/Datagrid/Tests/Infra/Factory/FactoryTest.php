@@ -3,6 +3,7 @@
 namespace Jfsimon\Datagrid\Tests\Infra\Factory;
 
 use Jfsimon\Datagrid\Infra\Factory\Factory;
+use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Service\ExtensionInterface;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
@@ -28,5 +29,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $names = array_map(function (ExtensionInterface $extension) { return $extension->getName(); }, $extensions);
 
         $this->assertEquals(array('e1', 'e2', 'e3', 'e4'), $names);
+    }
+
+    public function testSchemaNotFoundException()
+    {
+        $factory = new Factory();
+
+        $this->setExpectedException('Jfsimon\Datagrid\Exception\ConfigurationException');
+        $factory->createGrid(new Collection(array(array())));
     }
 }

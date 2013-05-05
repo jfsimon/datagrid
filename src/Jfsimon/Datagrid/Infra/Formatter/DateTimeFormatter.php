@@ -50,7 +50,7 @@ class DateTimeFormatter implements FormatterInterface
 
         $value = $formatter->format((int) $dateTime->format('U'));
 
-        if (intl_get_error_code() != 0) {
+        if (intl_is_failure(intl_get_error_code())) {
             throw FormatterException::intlError($this, intl_get_error_message());
         }
 

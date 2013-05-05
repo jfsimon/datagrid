@@ -32,9 +32,8 @@ abstract class AbstractActionsHandler implements HandlerInterface
                 ActionsExtension::NAME.'_trans_domain'  => 'datagrid',
                 ActionsExtension::NAME.'_trans_pattern' => '{grid}.'.ActionsExtension::NAME.'.{action}.'.LabelExtension::NAME,
             ))
-            ->addAllowedTypes(array(
-                ActionsExtension::NAME                  => 'Jfsimon\Datagrid\Model\Actions'
-            ))
+            ->addAllowedTypes(array(ActionsExtension::NAME => 'Jfsimon\Datagrid\Model\Actions'))
+            ->addAllowedTypes(array(ActionsExtension::NAME => 'null'))
         ;
     }
 

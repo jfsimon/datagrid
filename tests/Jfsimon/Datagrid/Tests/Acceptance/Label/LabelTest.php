@@ -15,7 +15,7 @@ class LabelTest extends AcceptanceTest
     public function testWhenIRenderGridIGetLabels()
     {
         $collection = new Collection(ArrayDataProvider::getQuarksData());
-        $schema = ArrayDataProvider::buildQuarksSchema(new Schema());
+        $schema = ArrayDataProvider::getQuarksSchema();
 
         $grid = $this->getFactory()->createGrid($collection, array('schema' => $schema));
         $html = $this->getTwig()->render('{{ datagrid(grid) }}', array('grid' => $grid));
@@ -26,7 +26,7 @@ class LabelTest extends AcceptanceTest
     public function testWhenICustomizeLabelsIGetCustomLabels()
     {
         $collection = new Collection(ArrayDataProvider::getBeatlesData());
-        $schema = ArrayDataProvider::buildBeatlesSchema(new Schema())
+        $schema = ArrayDataProvider::getBeatlesSchema()
             ->setOptions('name', array('label' => 'Member name'))
             ->setOptions('alive', array('label' => 'Is still alive?'))
         ;
@@ -40,7 +40,7 @@ class LabelTest extends AcceptanceTest
     public function testWhenISetupTranslationIGetTranslatedLabels()
     {
         $collection = new Collection(ArrayDataProvider::getBeatlesData());
-        $schema = ArrayDataProvider::buildBeatlesSchema(new Schema());
+        $schema = ArrayDataProvider::getBeatlesSchema();
 
         $grid = $this->getFactory()->createGrid($collection, array(
             'schema'      => $schema,
