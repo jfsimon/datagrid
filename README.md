@@ -29,24 +29,24 @@ Icebox
 Usage with custom data
 ----------------------
 
-**This is not working yet, don't try this at home.**
+1. Wrap your data with `Collection` object.
+2. Define your columns schema.
+3. Create a grid using a `Factory` instance.
+4. Render your grid within templates thanks to provided `Twig` extension.
+
 
 ```php
-$quarks = array(
-    array('name' => 'Up',      'generation' => 'first',  'charge' => '+2/3', 'antiparticle' => 'Antiup'),
-    array('name' => 'Down',    'generation' => 'first',  'charge' => '-1/3', 'antiparticle' => 'Antidown'),
-    array('name' => 'Charm',   'generation' => 'second', 'charge' => '+2/3', 'antiparticle' => 'Anticharm'),
-    array('name' => 'Strange', 'generation' => 'second', 'charge' => '-1/3', 'antiparticle' => 'Antistrange'),
-    array('name' => 'Top',     'generation' => 'third',  'charge' => '+2/3', 'antiparticle' => 'Antitop'),
-    array('name' => 'Bottom',  'generation' => 'third',  'charge' => '-1/3', 'antiparticle' => 'Antibottom'),
+$beatles = array(
+  array('slug' => 'john',    'name' => 'John Lenon',       'birthday' => new \DateTime('1940-10-09'), 'alive' => false),
+  array('slug' => 'paul',    'name' => 'Paul McCartney',   'birthday' => new \DateTime('1942-06-18'), 'alive' => true),
+  array('slug' => 'georges', 'name' => 'Georges Harrison', 'birthday' => new \DateTime('1943-02-25'), 'alive' => false),
+  array('slug' => 'ringo',   'name' => 'Ringo Starr',      'birthday' => new \DateTime('1940-07-07'), 'alive' => true),
 );
 
-$schema = new Schema();
-$schema
-    ->add('name', 'string')
-    ->add('generation', 'string')
-    ->add('charge', 'string')
-    ->add('antiparticle', 'string')
+$schema = Schema::create()
+    ->add('name', 'string', array('label' => 'Member name')
+    ->add('birthday', 'datetime', array('time_format' => \IntlDateFormatter::NONE))
+    ->add('alive', 'boolean', array('label' => 'Still alive?', 'false_value' => 'no more'))
 ;
 
 $factory = new Factory();
@@ -70,11 +70,11 @@ echo $factory
 Personal objectives
 -------------------
 
-- Create a well coded component using Domain Development Design
-- Make it highly extensible using open-close principle
-- Depend on strong libraries to keep code lightweight
-- Keep it open-source because I believe in it (license MIT)
-- Cover 100% of code with tests
+- Create a well coded component using Domain Development Design.
+- Make it highly extensible using open-close principle.
+- Depend on strong libraries to keep code lightweight.
+- Keep it open-source because I believe in it (license MIT).
+- Cover 100% of code with tests.
 
 
 Personal todo list
