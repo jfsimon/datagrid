@@ -11,9 +11,10 @@ Backlog
 - [x] as a user I want to render a collection of mixed data (string, number, datetime) (in-memory arrays) as an HTML table
 - [x] as a user I want to get columns name in header
 - [x] as a user I want to automatically display CRUD links on each row
-- [x] as a user I want to be able to translate columns label
-- [ ] as a user I want to be able to translate actions label
-- [ ] as a user I want to be able to add classes to HTML tags
+- [x] as a user I want to translate columns label
+- [x] as a user I want to translate actions label
+- [ ] as a user I want to use router for action links
+- [ ] as a user I want to add classes to HTML tags
 
 Icebox
 ------

@@ -18,14 +18,32 @@ class ActionsExtension extends AbstractExtension
     const NAME = 'actions';
 
     /**
+     * @var DataActionsHandler
+     */
+    private $dataHandler;
+
+    /**
+     * @var LabelActionsHandler
+     */
+    private $labelHandler;
+
+    /**
+     * @param DataActionsHandler|null  $dataHandler
+     * @param LabelActionsHandler|null $labelHandler
+     */
+    public function __construct(DataActionsHandler $dataHandler = null, LabelActionsHandler $labelHandler = null)
+    {
+        $this->dataHandler = $dataHandler ?: new DataActionsHandler();
+        $this->labelHandler = $labelHandler ?: new LabelActionsHandler();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configure(OptionsResolver $resolver)
     {
-        $resolver
-            ->setDefaults(array(self::NAME => null))
-            ->addAllowedTypes(array(self::NAME => 'Jfsimon\Datagrid\Model\Actions'))
-        ;
+        $this->dataHandler->configure($resolver);
+        $this->labelHandler->configure($resolver);
     }
 
     /**
@@ -33,7 +51,7 @@ class ActionsExtension extends AbstractExtension
      */
     public function buildSchema(Schema $schema, Collection $collection, array $options = array())
     {
-        if ($options[self::NAME]) {
+        if (null !== $options[self::NAME]) {
             $schema->add('.'.self::NAME, self::NAME, array(self::NAME => $options[self::NAME]));
         }
     }
@@ -43,10 +61,10 @@ class ActionsExtension extends AbstractExtension
      */
     public function buildColumn(Column $column, $type, array $options = array())
     {
-        if (self::NAME === $type) {
+        if (null !== $options[self::NAME] && self::NAME === $type) {
             $column
-                ->register(new DataActionsHandler(), true)
-                ->register(new LabelActionsHandler(), true)
+                ->register($this->dataHandler, true)
+                ->register($this->labelHandler, true)
             ;
         }
     }

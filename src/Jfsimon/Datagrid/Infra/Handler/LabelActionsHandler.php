@@ -18,7 +18,7 @@ class LabelActionsHandler extends AbstractActionsHandler
      */
     public function handle(Column $column, Entity $entity = null, array $options = array())
     {
-        return new Cell($this->getContent($this->getActions($options)->getGlobalActions()));
+        return new Cell($this->getContent($this->getActions($options)->getGlobalActions(), $column, $options));
     }
 
     /**

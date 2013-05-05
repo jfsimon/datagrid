@@ -25,7 +25,7 @@ class LabelHandler implements HandlerInterface
             LabelExtension::NAME                  => true,
             LabelExtension::NAME.'_trans'         => false,
             LabelExtension::NAME.'_trans_domain'  => 'datagrid',
-            LabelExtension::NAME.'_trans_pattern' => '{grid}.{column}.'.LabelExtension::NAME,
+            LabelExtension::NAME.'_trans_pattern' => '{grid}.columns.{column}.'.LabelExtension::NAME,
         ));
     }
 
@@ -49,14 +49,9 @@ class LabelHandler implements HandlerInterface
             return new Cell(new Label($options[LabelExtension::NAME]));
         }
 
-        // label enabled
-        if ($options[LabelExtension::NAME]) {
-            $formatter = new LabelFormatter();
+        $formatter = new LabelFormatter();
 
-            return new Cell(new Label($formatter->format($column->getName())));
-        }
-
-        return new Cell();
+        return new Cell(new Label($formatter->format($column->getName())));
     }
 
     /**

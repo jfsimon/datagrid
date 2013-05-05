@@ -1,0 +1,6 @@
+beatles:
+    actions:
+        create.label: Add one
+        read.label: Details
+        update.label: Change
+        delete.label: Dismiss

@@ -1,4 +1,5 @@
 beatles:
-    name.label: Member name
-    birthday.label: Birthday
-    alive.label: Is still alive?
+    columns:
+        name.label: Member name
+        birthday.label: Birthday
+        alive.label: Is still alive?

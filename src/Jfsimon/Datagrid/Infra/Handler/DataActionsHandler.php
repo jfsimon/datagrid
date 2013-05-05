@@ -17,7 +17,7 @@ class DataActionsHandler extends AbstractActionsHandler
      */
     public function handle(Column $column, Entity $entity = null, array $options = array())
     {
-        return new Cell($this->getContent($this->getActions($options)->resolveEntityActions($entity)));
+        return new Cell($this->getContent($this->getActions($options)->resolveEntityActions($entity), $column, $options));
     }
 
     /**

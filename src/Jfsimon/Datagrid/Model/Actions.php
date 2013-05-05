@@ -30,16 +30,16 @@ class Actions
     /**
      * Adds a global action.
      *
-     * @param string $label
+     * @param string $name
      * @param string $url
      *
      * @return Actions
      */
-    public function addGlobalAction($label, $url)
+    public function addGlobalAction($name, $url)
     {
         $this->globalActions[] = array(
-            'label' => $label,
-            'url'   => $url,
+            'name' => $name,
+            'url'  => $url,
         );
 
         return $this;
@@ -48,15 +48,15 @@ class Actions
     /**
      * Adds an entity action.
      *
-     * @param string $label
+     * @param string $name
      * @param string $pattern
      *
      * @return Actions
      */
-    public function addEntityAction($label, $pattern)
+    public function addEntityAction($name, $pattern)
     {
         $this->entityActions[] = array(
-            'label'   => $label,
+            'name'    => $name,
             'pattern' => $pattern,
         );
 
@@ -86,8 +86,8 @@ class Actions
 
         foreach ($this->entityActions as $action) {
             $actions[] = array(
-                'label' => $action['label'],
-                'url'   => $this->resolveEntityUrl($action['pattern'], $entity),
+                'name' => $action['name'],
+                'url'  => $this->resolveEntityUrl($action['pattern'], $entity),
             );
         }
 

@@ -8,6 +8,7 @@ use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Schema;
 use Jfsimon\Datagrid\Tests\Acceptance\AcceptanceTest;
 use Jfsimon\Datagrid\Tests\Acceptance\ArrayDataProvider;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
 class ActionsTest extends AcceptanceTest
 {
@@ -17,16 +18,41 @@ class ActionsTest extends AcceptanceTest
         $schema = ArrayDataProvider::buildQuarksSchema(new Schema());
 
         $actions = Actions::create()
-            ->addGlobalAction('Create', '/quarks/create')
-            ->addEntityAction('Read', '/quarks/read/{id}')
-            ->addEntityAction('Update', '/quarks/update/{id}')
-            ->addEntityAction('Delete', '/quarks/delete/{id}')
+            ->addGlobalAction('create', '/quarks/create')
+            ->addEntityAction('read', '/quarks/read/{id}')
+            ->addEntityAction('update', '/quarks/update/{id}')
+            ->addEntityAction('delete', '/quarks/delete/{id}')
         ;
 
         $grid = $this->getFactory()->createGrid($collection, array('schema' => $schema, 'actions' => $actions));
         $html = $this->getTwig()->render('{{ datagrid(grid) }}', array('grid' => $grid));
 
         $this->assertFixtureEquals(__DIR__.'/quarks.html', $html);
+    }
+
+    public function testWhenISetupTranslationIGetTranslatedActionLabels()
+    {
+        $collection = new Collection(ArrayDataProvider::getBeatlesData());
+        $schema = ArrayDataProvider::buildBeatlesSchema(new Schema());
+
+        $actions = Actions::create()
+            ->addGlobalAction('create', '/beatles/create')
+            ->addEntityAction('read', '/beatles/read/{slug}')
+            ->addEntityAction('update', '/beatles/update/{slug}')
+            ->addEntityAction('delete', '/beatles/delete/{slug}')
+        ;
+
+        $grid = $this->getFactory()->createGrid($collection, array(
+            'schema'        => $schema,
+            'actions'       => $actions,
+            'name'          => 'beatles',
+            'actions_trans' => true,
+        ));
+        $html = $this
+            ->getTwig('trans.html.twig', array(new TranslationExtension($this->getTranslator(__DIR__))))
+            ->render('{{ datagrid(grid) }}', array('grid' => $grid));
+
+        $this->assertFixtureEquals(__DIR__.'/beatles.html', $html);
     }
 
     private function getFactory()
