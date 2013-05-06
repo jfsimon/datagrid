@@ -8,6 +8,7 @@ use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Cell;
 use Jfsimon\Datagrid\Model\Component\Label;
 use Jfsimon\Datagrid\Model\Data\Entity;
+use Jfsimon\Datagrid\Model\Trans;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,10 +23,8 @@ class LabelHandler implements HandlerInterface
     public function configure(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            LabelExtension::NAME                  => true,
-            LabelExtension::NAME.'_trans'         => false,
-            LabelExtension::NAME.'_trans_domain'  => 'datagrid',
-            LabelExtension::NAME.'_trans_pattern' => '{grid}.columns.{column}.'.LabelExtension::NAME,
+            LabelExtension::NAME          => true,
+            LabelExtension::NAME.'_trans' => Trans::disable(),
         ));
     }
 
@@ -34,24 +33,9 @@ class LabelHandler implements HandlerInterface
      */
     public function handle(Column $column, Entity $entity = null, array $options = array())
     {
-        // translator enabled
-        if ($options[LabelExtension::NAME.'_trans']) {
-            $label = strtr($options[LabelExtension::NAME.'_trans_pattern'], array(
-                '{grid}'   => $column->getGrid()->getName(),
-                '{column}' => $column->getName(),
-            ));
+        $subject = is_string($options[LabelExtension::NAME]) ? $options[LabelExtension::NAME] : $column->getName();
 
-            return new Cell(new Label($label, true, $options[LabelExtension::NAME.'_trans_domain']));
-        }
-
-        // custom label
-        if (is_string($options[LabelExtension::NAME])) {
-            return new Cell(new Label($options[LabelExtension::NAME]));
-        }
-
-        $formatter = new LabelFormatter();
-
-        return new Cell(new Label($formatter->format($column->getName())));
+        return new Cell($this->getLabel($subject, $column->getGrid()->getName(), $options[LabelExtension::NAME.'_trans']));
     }
 
     /**
@@ -60,5 +44,29 @@ class LabelHandler implements HandlerInterface
     public function getType()
     {
         return LabelExtension::NAME;
+    }
+
+    /**
+     * @param string $subject
+     * @param string $grid
+     * @param Trans  $trans
+     *
+     * @return Label
+     */
+    private function getLabel($subject, $grid, Trans $trans)
+    {
+        if ($trans->isEnabled()) {
+            $label = $trans->resolvePattern(array(
+                '{grid}'      => $grid,
+                '{extension}' => LabelExtension::NAME,
+                '{subject}'   => $subject,
+            ));
+
+            return new Label($label, true, $trans->getDomain());
+        }
+
+        $formatter = new LabelFormatter();
+
+        return new Label($formatter->format($subject));
     }
 }

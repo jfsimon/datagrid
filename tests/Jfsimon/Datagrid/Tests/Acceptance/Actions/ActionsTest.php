@@ -6,6 +6,7 @@ use Jfsimon\Datagrid\Infra\Factory\Factory;
 use Jfsimon\Datagrid\Model\Actions;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Schema;
+use Jfsimon\Datagrid\Model\Trans;
 use Jfsimon\Datagrid\Tests\Acceptance\AcceptanceTest;
 use Jfsimon\Datagrid\Tests\Acceptance\ArrayDataProvider;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
@@ -17,7 +18,7 @@ class ActionsTest extends AcceptanceTest
         $collection = new Collection(ArrayDataProvider::getQuarksData());
         $schema = ArrayDataProvider::getQuarksSchema();
 
-        $actions = Actions::create()
+        $actions = Actions::enable()
             ->addGlobalAction('create', '/quarks/create')
             ->addEntityAction('read', '/quarks/read/{id}')
             ->addEntityAction('update', '/quarks/update/{id}')
@@ -35,7 +36,7 @@ class ActionsTest extends AcceptanceTest
         $collection = new Collection(ArrayDataProvider::getBeatlesData());
         $schema = ArrayDataProvider::getBeatlesSchema();
 
-        $actions = Actions::create()
+        $actions = Actions::enable()
             ->addGlobalAction('create', '/beatles/create')
             ->addEntityAction('read', '/beatles/read/{slug}')
             ->addEntityAction('update', '/beatles/update/{slug}')
@@ -46,7 +47,7 @@ class ActionsTest extends AcceptanceTest
             'schema'        => $schema,
             'actions'       => $actions,
             'name'          => 'beatles',
-            'actions_trans' => true,
+            'actions_trans' => Trans::enable(),
         ));
         $html = $this
             ->getTwig('trans.html.twig', array(new TranslationExtension($this->getTranslator(__DIR__))))

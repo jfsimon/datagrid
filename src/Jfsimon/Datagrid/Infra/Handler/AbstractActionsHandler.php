@@ -12,6 +12,7 @@ use Jfsimon\Datagrid\Model\Component\Label;
 use Jfsimon\Datagrid\Model\Component\Link;
 use Jfsimon\Datagrid\Model\Component\Url;
 use Jfsimon\Datagrid\Model\Actions;
+use Jfsimon\Datagrid\Model\Trans;
 use Jfsimon\Datagrid\Service\HandlerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,13 +28,13 @@ abstract class AbstractActionsHandler implements HandlerInterface
     {
         $resolver
             ->setDefaults(array(
-                ActionsExtension::NAME                  => null,
-                ActionsExtension::NAME.'_trans'         => false,
-                ActionsExtension::NAME.'_trans_domain'  => 'datagrid',
-                ActionsExtension::NAME.'_trans_pattern' => '{grid}.'.ActionsExtension::NAME.'.{action}.'.LabelExtension::NAME,
+                ActionsExtension::NAME          => Actions::disable(),
+                ActionsExtension::NAME.'_trans' => Trans::disable(),
             ))
-            ->addAllowedTypes(array(ActionsExtension::NAME => 'Jfsimon\Datagrid\Model\Actions'))
-            ->addAllowedTypes(array(ActionsExtension::NAME => 'null'))
+            ->addAllowedTypes(array(
+                ActionsExtension::NAME          => 'Jfsimon\Datagrid\Model\Actions',
+                ActionsExtension::NAME.'_trans' => 'Jfsimon\Datagrid\Model\Trans',
+            ))
         ;
     }
 
@@ -67,7 +68,7 @@ abstract class AbstractActionsHandler implements HandlerInterface
         foreach ($actions as $action) {
             $collection->add(
                 new Link(new Url($action['url']),
-                $this->getLabel($action['name'], $column->getGrid()->getName(), $options))
+                $this->getLabel($action['name'], $column->getGrid()->getName(), $options[ActionsExtension::NAME.'_trans']))
             );
         }
 
@@ -75,26 +76,26 @@ abstract class AbstractActionsHandler implements HandlerInterface
     }
 
     /**
-     * @param string $actionName
-     * @param string $gridName
-     * @param array  $options
+     * @param string $subject
+     * @param string $grid
+     * @param Trans  $trans
      *
      * @return Label
      */
-    private function getLabel($actionName, $gridName, array $options)
+    private function getLabel($subject, $grid, Trans $trans)
     {
-        // translator enabled
-        if ($options[ActionsExtension::NAME.'_trans']) {
-            $label = strtr($options[ActionsExtension::NAME.'_trans_pattern'], array(
-                '{grid}'   => $gridName,
-                '{action}' => $actionName,
+        if ($trans->isEnabled()) {
+            $label = $trans->resolvePattern(array(
+                '{grid}'      => $grid,
+                '{extension}' => ActionsExtension::NAME,
+                '{subject}'   => $subject,
             ));
 
-            return new Label($label, true, $options[ActionsExtension::NAME.'_trans_domain']);
+            return new Label($label, true, $trans->getDomain());
         }
 
         $formatter = new LabelFormatter();
 
-        return new Label($formatter->format($actionName));
+        return new Label($formatter->format($subject));
     }
 }

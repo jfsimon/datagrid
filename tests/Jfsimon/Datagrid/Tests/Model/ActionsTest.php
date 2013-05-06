@@ -14,7 +14,7 @@ class ActionsTest extends \PHPUnit_Framework_TestCase
     /** @dataProvider provideResolveEntityUrlTestData */
     public function testResolveEntityUrl($pattern, $context, $expectation)
     {
-        $actions = new Actions();
+        $actions = Actions::enable();
         $entity = new Entity($context, PropertyAccess::getPropertyAccessor());
 
         $method = new \ReflectionMethod($actions, 'resolveEntityUrl');

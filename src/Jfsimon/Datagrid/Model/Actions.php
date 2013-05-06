@@ -10,6 +10,11 @@ use Jfsimon\Datagrid\Model\Data\Entity;
 class Actions
 {
     /**
+     * @var boolean
+     */
+    private $enabled;
+
+    /**
      * @var array
      */
     private $globalActions = array();
@@ -22,9 +27,33 @@ class Actions
     /**
      * @return Actions
      */
-    public static function create()
+    public static function enable()
     {
-        return new self();
+        return new self(true);
+    }
+
+    /**
+     * @return Actions
+     */
+    public static function disable()
+    {
+        return new self(false);
+    }
+
+    /**
+     * @param boolean $enabled
+     */
+    public function __construct($enabled)
+    {
+        $this->enabled = (boolean) $enabled;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
     }
 
     /**

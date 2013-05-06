@@ -5,6 +5,7 @@ namespace Jfsimon\Datagrid\Tests\Acceptance\Data;
 use Jfsimon\Datagrid\Infra\Factory\Factory;
 use Jfsimon\Datagrid\Model\Data\Collection;
 use Jfsimon\Datagrid\Model\Schema;
+use Jfsimon\Datagrid\Model\Trans;
 use Jfsimon\Datagrid\Tests\Acceptance\AcceptanceTest;
 use Jfsimon\Datagrid\Tests\Acceptance\ArrayDataProvider;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
@@ -45,7 +46,7 @@ class LabelTest extends AcceptanceTest
         $grid = $this->getFactory()->createGrid($collection, array(
             'schema'      => $schema,
             'name'        => 'beatles',
-            'label_trans' => true,
+            'label_trans' => Trans::enable(),
         ));
         $html = $this
             ->getTwig('trans.html.twig', array(new TranslationExtension($this->getTranslator(__DIR__))))
