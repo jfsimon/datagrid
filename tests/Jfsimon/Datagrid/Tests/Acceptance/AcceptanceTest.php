@@ -14,6 +14,7 @@ abstract class AcceptanceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         \Locale::setDefault('en_US');
+        date_default_timezone_set('Europe/Lisbon');
     }
 
     protected function getTwig($template = 'base.html.twig', array $extensions = array())

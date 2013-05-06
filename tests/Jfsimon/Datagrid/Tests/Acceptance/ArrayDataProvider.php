@@ -34,10 +34,10 @@ class ArrayDataProvider
     public static function getBeatlesData()
     {
         return array(
-            array('slug' => 'john',    'name' => 'John Lenon',       'birthday' => new \DateTime('1940-10-09'), 'alive' => false),
-            array('slug' => 'paul',    'name' => 'Paul McCartney',   'birthday' => new \DateTime('1942-06-18'), 'alive' => true),
-            array('slug' => 'georges', 'name' => 'Georges Harrison', 'birthday' => new \DateTime('1943-02-25'), 'alive' => false),
-            array('slug' => 'ringo',   'name' => 'Ringo Starr',      'birthday' => new \DateTime('1940-07-07'), 'alive' => true),
+            array('slug' => 'john',    'name' => 'John Lenon',       'birthday' => new \DateTime('1940-10-09 UTC'), 'alive' => false),
+            array('slug' => 'paul',    'name' => 'Paul McCartney',   'birthday' => new \DateTime('1942-06-18 UTC'), 'alive' => true),
+            array('slug' => 'georges', 'name' => 'Georges Harrison', 'birthday' => new \DateTime('1943-02-25 UTC'), 'alive' => false),
+            array('slug' => 'ringo',   'name' => 'Ringo Starr',      'birthday' => new \DateTime('1940-07-07 UTC'), 'alive' => true),
         );
     }
 
