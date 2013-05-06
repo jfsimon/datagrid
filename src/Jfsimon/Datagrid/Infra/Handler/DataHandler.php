@@ -35,6 +35,7 @@ class DataHandler implements HandlerInterface
     public function configure(OptionsResolver $resolver)
     {
         $this->formatter->configure($resolver);
+        $resolver->setDefaults(array('path' => null));
     }
 
     /**
@@ -42,7 +43,7 @@ class DataHandler implements HandlerInterface
      */
     public function handle(Column $column, Entity $entity = null, array $options = array())
     {
-        $value = $entity->get($column->getName());
+        $value = $entity->get($column->getName(), $options['path']);
 
         return new Cell(new Data($this->formatter->format($value, $options)));
     }

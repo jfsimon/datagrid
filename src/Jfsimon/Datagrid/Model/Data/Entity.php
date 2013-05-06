@@ -54,16 +54,17 @@ class Entity
     }
 
     /**
-     * @param string $name
+     * @param string      $name
+     * @param string|null $path
      *
      * @return mixed
      */
-    public function get($name)
+    public function get($name, $path = null)
     {
-        $path = isset($this->mapping[$name]) ? $this->mapping[$name] : $name;
+        $path = $path ?: isset($this->mapping[$name]) ? $this->mapping[$name] : $name;
 
         if (is_array($this->data)) {
-            $path = '['.$path.']';
+            $path = '['.str_replace('.', '][', $path).']';
         }
 
         return $this->accessor->getValue($this->data, $path);
