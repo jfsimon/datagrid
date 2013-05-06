@@ -10,8 +10,14 @@ use Jfsimon\Datagrid\Infra\Extension\LabelExtension;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
+use Jfsimon\Datagrid\Model\Event\Events;
+use Jfsimon\Datagrid\Model\Event\GridEvent;
+use Jfsimon\Datagrid\Model\Event\OptionsEvent;
+use Jfsimon\Datagrid\Model\Event\SchemaEvent;
 use Jfsimon\Datagrid\Service\ExtensionInterface;
 use Jfsimon\Datagrid\Service\FactoryInterface;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -28,6 +34,11 @@ class Factory implements FactoryInterface
      * @var boolean
      */
     private $sorted = true;
+
+    /**
+     * @var EventDispatcherInterface|null
+     */
+    private $dispatcher;
 
     /**
      * Constructor.
@@ -60,6 +71,16 @@ class Factory implements FactoryInterface
     /**
      * {@inheritdoc}
      */
+    public function setEventDispatcher(EventDispatcherInterface $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function removeExtension($name)
     {
         if (isset($this->extensions[$name])) {
@@ -75,15 +96,28 @@ class Factory implements FactoryInterface
     public function createGrid(Collection $collection, array $options = array())
     {
         $extensions = $this->getExtensions();
+        $grid = new Grid();
 
-        // resolve options
+        // options resolution
+
+        if (null !== $this->dispatcher) {
+            $this->dispatcher->dispatch(Events::OPTIONS_SET, $event = new OptionsEvent($options));
+            $options = $event->getOptions();
+        }
+
         $resolver = new OptionsResolver();
         foreach ($extensions as $extension) {
             $extension->configure($resolver);
         }
         $options = $resolver->resolve($options);
 
-        // read schema
+        if (null !== $this->dispatcher) {
+            $this->dispatcher->dispatch(Events::OPTIONS_RESOLVED, $event = new OptionsEvent($options));
+            $options = $event->getOptions();
+        }
+
+        // schema building
+
         $schema = null;
         foreach ($extensions as $extension) {
             $schema = $extension->guessSchema($collection->getPeek(), $options);
@@ -95,23 +129,40 @@ class Factory implements FactoryInterface
             throw ConfigurationException::schemaNotFound(array_keys($this->extensions));
         }
 
-        // create grid
-        $grid = new Grid();
+        if (null !== $this->dispatcher) {
+            $this->dispatcher->dispatch(Events::SCHEMA_GUESSED, $event = new SchemaEvent($schema));
+            $schema = $event->getSchema();
+        }
+
         $schema->bind($this, $grid);
 
-        // build schema: extensions are able to manipulate schema columns
         foreach ($extensions as $extension) {
             $extension->buildSchema($schema, $collection, $options);
         }
 
-        // build grid: extensions are responsible of adding rows
+        if (null !== $this->dispatcher) {
+            $this->dispatcher->dispatch(Events::SCHEMA_BUILT, $event = new SchemaEvent($schema));
+            $schema = $event->getSchema();
+        }
+
+        // grid building
+
         foreach ($extensions as $extension) {
             $extension->buildGrid($grid, $schema, $collection, $options);
         }
 
-        // visit model: visitors are able to manipulate AST
+        if (null !== $this->dispatcher) {
+            $this->dispatcher->dispatch(Events::GRID_BUILT, $event = new GridEvent($grid));
+            $grid = $event->getGrid();
+        }
+
         foreach ($extensions as $extension) {
             $extension->visit($grid, $options);
+        }
+
+        if (null !== $this->dispatcher) {
+            $this->dispatcher->dispatch(Events::GRID_VISITED, $event = new GridEvent($grid));
+            $grid = $event->getGrid();
         }
 
         return $grid;

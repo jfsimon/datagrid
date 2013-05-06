@@ -6,6 +6,7 @@ use Jfsimon\Datagrid\Exception\ConfigurationException;
 use Jfsimon\Datagrid\Model\Column;
 use Jfsimon\Datagrid\Model\Component\Grid;
 use Jfsimon\Datagrid\Model\Data\Collection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Grid factory service interface.
@@ -23,6 +24,15 @@ interface FactoryInterface
      * @return FactoryInterface
      */
     public function register(ExtensionInterface $extension, $priority = 0);
+
+    /**
+     * Assigns an event dispatcher.
+     *
+     * @param EventDispatcherInterface $dispatcher
+     *
+     * @return FactoryInterface
+     */
+    public function setEventDispatcher(EventDispatcherInterface $dispatcher);
 
     /**
      * Removes an extension.
