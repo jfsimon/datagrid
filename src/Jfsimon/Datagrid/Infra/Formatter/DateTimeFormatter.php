@@ -20,7 +20,7 @@ class DateTimeFormatter implements FormatterInterface
             'null_value'  => '',
             'date_format' => \IntlDateFormatter::MEDIUM,
             'time_format' => \IntlDateFormatter::SHORT,
-            'time_zone'   => null,
+            'time_zone'   => 'UTC',
             'calendar'    => \IntlDateFormatter::GREGORIAN,
             'pattern'     => null,
         ));

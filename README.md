@@ -4,6 +4,8 @@ A datagrid component for PHP
 The main goal of this component is to render a result set from any data source as an HTML table
 with sorting, filtering capabilities (ideal for backends).
 
+[![Build Status](https://travis-ci.org/jfsimon/datagrid.png)](https://travis-ci.org/jfsimon/datagrid)
+
 Backlog
 -------
 
