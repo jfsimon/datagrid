@@ -26,15 +26,6 @@ interface FactoryInterface
     public function register(ExtensionInterface $extension, $priority = 0);
 
     /**
-     * Assigns an event dispatcher.
-     *
-     * @param EventDispatcherInterface $dispatcher
-     *
-     * @return FactoryInterface
-     */
-    public function setEventDispatcher(EventDispatcherInterface $dispatcher);
-
-    /**
      * Removes an extension.
      *
      * @param string $name

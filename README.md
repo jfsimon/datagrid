@@ -77,7 +77,7 @@ Personal objectives
 - Depend on strong libraries to keep code lightweight.
 - Keep it open-source because I believe in it (license MIT).
 - Cover 100% of code with tests.
-
+- Keep as framework-agnostic as possible.
 
 Personal todo list
 ------------------
