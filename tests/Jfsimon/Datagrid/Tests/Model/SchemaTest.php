@@ -40,4 +40,12 @@ class SchemaTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Jfsimon\Datagrid\Exception\WorkflowException');
         $method->invoke($schema, array());
     }
+
+    public function testRemoveColumn()
+    {
+        $schema = Schema::create()->add('id', 'number')->add('name', 'string');
+        $this->assertTrue($schema->has('id'));
+        $schema->remove('id');
+        $this->assertFalse($schema->has('id'));
+    }
 }

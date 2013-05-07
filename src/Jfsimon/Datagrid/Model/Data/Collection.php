@@ -18,6 +18,11 @@ class Collection
     const TYPE_AGGREGATE = 3;
 
     /**
+     * @var int
+     */
+    private $type;
+
+    /**
      * @var \Iterator|\IteratorIterator
      */
     private $data;
@@ -105,17 +110,8 @@ class Collection
      */
     public function rewind()
     {
+        $this->peek = null;
         $this->data->rewind();
-    }
-
-    /**
-     * Returns collection length.
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return $this->data->count();
     }
 
     /**

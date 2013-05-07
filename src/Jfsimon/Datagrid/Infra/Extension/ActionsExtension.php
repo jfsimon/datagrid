@@ -51,7 +51,7 @@ class ActionsExtension extends AbstractExtension
      */
     public function buildSchema(Schema $schema, Collection $collection, array $options = array())
     {
-        if (null !== $options[self::NAME]) {
+        if ($options[self::NAME]->isEnabled()) {
             $schema->add('.'.self::NAME, self::NAME, array(self::NAME => $options[self::NAME]));
         }
     }
@@ -61,7 +61,7 @@ class ActionsExtension extends AbstractExtension
      */
     public function buildColumn(Column $column, $type, array $options = array())
     {
-        if (null !== $options[self::NAME] && self::NAME === $type) {
+        if ($options[self::NAME]->isEnabled() && self::NAME === $type) {
             $column
                 ->register($this->dataHandler, true)
                 ->register($this->labelHandler, true)

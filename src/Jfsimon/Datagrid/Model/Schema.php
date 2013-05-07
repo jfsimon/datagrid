@@ -59,6 +59,28 @@ class Schema
     }
 
     /**
+     * Tests column existence.
+     *
+     * @param string $name
+     *
+     * @return boolean
+     */
+    public function has($name)
+    {
+        return isset($this->types[$name]);
+    }
+
+    /**
+     * Removes a column.
+     *
+     * @param string $name
+     */
+    public function remove($name)
+    {
+        unset($this->types[$name]);
+    }
+
+    /**
      * Merges named column options.
      *
      * @param string $name

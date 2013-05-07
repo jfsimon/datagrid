@@ -51,6 +51,7 @@ class Entity
         $this->data = $data;
         $this->accessor = $accessor;
         $this->mapping = $mapping;
+        $this->idPath = $idPath;
     }
 
     /**
@@ -61,7 +62,7 @@ class Entity
      */
     public function get($name, $path = null)
     {
-        $path = $path ?: isset($this->mapping[$name]) ? $this->mapping[$name] : $name;
+        $path = $path ?: (isset($this->mapping[$name]) ? $this->mapping[$name] : $name);
 
         if (is_array($this->data)) {
             $path = '['.str_replace('.', '][', $path).']';

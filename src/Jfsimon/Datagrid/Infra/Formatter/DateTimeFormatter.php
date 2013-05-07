@@ -54,6 +54,8 @@ class DateTimeFormatter implements FormatterInterface
             throw FormatterException::intlError($this, intl_get_error_message());
         }
 
+        $value = preg_replace('~GMT\+00:00$~', 'GMT', $value);
+
         return $value;
     }
 

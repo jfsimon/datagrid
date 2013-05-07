@@ -4,7 +4,9 @@ namespace Jfsimon\Datagrid\Tests\Infra\Factory;
 
 use Jfsimon\Datagrid\Infra\Factory\Factory;
 use Jfsimon\Datagrid\Model\Data\Collection;
+use Jfsimon\Datagrid\Model\Schema;
 use Jfsimon\Datagrid\Service\ExtensionInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,5 +39,30 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('Jfsimon\Datagrid\Exception\ConfigurationException');
         $factory->createGrid(new Collection(array(array())));
+    }
+
+    public function testEventDispatcher()
+    {
+        $schema = Schema::create()
+            ->add('id', 'number')
+            ->add('name', 'string');
+
+        $options = array(
+            'label'  => false,
+            'schema' => $schema,
+        );
+
+        $data = array(
+            array('id' => 1, 'name' => 'first'),
+            array('id' => 2, 'name' => 'second'),
+        );
+
+        $subscriber = new EventDispatcherTestSubscriber($this, $options, $schema);
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber($subscriber);
+
+        $factory = new Factory();
+        $factory->setEventDispatcher($dispatcher);
+        $factory->createGrid(new Collection($data), $options);
     }
 }
