@@ -66,8 +66,8 @@ abstract class AbstractActionsHandler implements HandlerInterface
         $collection = new Collection();
 
         foreach ($actions as $action) {
-            $collection->add(
-                new Link(new Url($action['url']),
+            $collection->add(new Link(
+                $this->getUrl($action),
                 $this->getLabel($action['name'], $column->getGrid()->getName(), $options[ActionsExtension::NAME.'_trans']))
             );
         }
@@ -97,5 +97,19 @@ abstract class AbstractActionsHandler implements HandlerInterface
         $formatter = new LabelFormatter();
 
         return new Label($formatter->format($subject));
+    }
+
+    /**
+     * @param array $action
+     *
+     * @return Url
+     */
+    private function getUrl(array $action)
+    {
+        if ($action['router']) {
+            return new Url(null, $action['route'], $action['parameters']);
+        }
+
+        return new Url($action['url']);
     }
 }

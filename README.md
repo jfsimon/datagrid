@@ -15,7 +15,7 @@ Backlog
 - [x] as a user I want to automatically display CRUD links on each row
 - [x] as a user I want to translate columns label
 - [x] as a user I want to translate actions label
-- [ ] as a user I want to use router for action links
+- [x] as a user I want to use router for action links
 - [ ] as a user I want to add classes to HTML tags
 
 Icebox

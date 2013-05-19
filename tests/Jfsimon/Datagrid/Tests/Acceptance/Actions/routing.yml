@@ -1,0 +1,11 @@
+quarks_create:
+    pattern: /quarks/create
+
+quarks_read:
+    pattern: /quarks/read/{id}
+
+quarks_update:
+    pattern: /quarks/update/{id}
+
+quarks_delete:
+    pattern: /quarks/delete/{id}

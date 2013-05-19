@@ -2,6 +2,6 @@
 
 {% block url %}
 {% spaceless %}
-    {{ router ? url(route, parameters) : url }}
+    {{ router ? path(route, parameters) : url }}
 {% endspaceless %}
 {% endblock url %}

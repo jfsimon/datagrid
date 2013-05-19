@@ -4,9 +4,12 @@ namespace Jfsimon\Datagrid\Tests\Acceptance;
 
 use Jfsimon\Datagrid\Bridge\Twig\Extension\DatagridExtension;
 use Jfsimon\Datagrid\Infra\Renderer\TwigRenderer;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\Loader\YamlFileLoader as RoutingYamlFileLoader;
+use Symfony\Component\Translation\Loader\YamlFileLoader as TranslationYamlFileLoader;
 use Symfony\Component\Translation\Translator;
 
 abstract class AcceptanceTest extends \PHPUnit_Framework_TestCase
@@ -35,7 +38,7 @@ abstract class AcceptanceTest extends \PHPUnit_Framework_TestCase
 
     protected function getTranslator($resourcesPath)
     {
-        $loader = new YamlFileLoader();
+        $loader = new TranslationYamlFileLoader();
         $translator = new Translator('en');
         $translator->addLoader('yml', $loader);
 
@@ -46,6 +49,11 @@ abstract class AcceptanceTest extends \PHPUnit_Framework_TestCase
         }
 
         return $translator;
+    }
+
+    protected function getRouter($resourcePath, $resourceName)
+    {
+        return new Router(new RoutingYamlFileLoader(new FileLocator(array($resourcePath))), $resourceName);
     }
 
     protected function assertFixtureEquals($file, $html)

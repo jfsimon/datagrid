@@ -12,6 +12,7 @@
     "require-dev": {
         "twig/twig": ">=1",
         "symfony/translation": ">=2.1",
+        "symfony/routing": ">=2.1",
         "symfony/config": ">=2.1",
         "symfony/yaml": ">=2.1",
         "symfony/twig-bridge": ">=2.1",

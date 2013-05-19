@@ -57,36 +57,82 @@ class Actions
     }
 
     /**
-     * Adds a global action.
+     * Adds a global action URL.
      *
      * @param string $name
      * @param string $url
      *
      * @return Actions
      */
-    public function addGlobalAction($name, $url)
+    public function addGlobalUrl($name, $url)
     {
         $this->globalActions[] = array(
-            'name' => $name,
-            'url'  => $url,
+            'router' => false,
+            'name'   => $name,
+            'url'    => $url,
         );
 
         return $this;
     }
 
     /**
-     * Adds an entity action.
+     * Adds a global action route.
+     *
+     * @param string $name
+     * @param string $route
+     * @param array  $parameters
+     *
+     * @return Actions
+     */
+    public function addGlobalRoute($name, $route, array $parameters = array())
+    {
+        $this->globalActions[] = array(
+            'router'     => true,
+            'name'       => $name,
+            'route'      => $route,
+            'parameters' => $parameters,
+        );
+
+        return $this;
+    }
+
+    /**
+     * Adds an entity action URL.
      *
      * @param string $name
      * @param string $pattern
      *
      * @return Actions
      */
-    public function addEntityAction($name, $pattern)
+    public function addEntityUrl($name, $pattern)
     {
         $this->entityActions[] = array(
+            'router'  => false,
             'name'    => $name,
             'pattern' => $pattern,
+        );
+
+        return $this;
+    }
+
+    /**
+     * Adds an entity action route.
+     *
+     * @param string $name
+     * @param string $route
+     * @param array  $mapping
+     * @param array  $parameters
+     *
+     * @return Actions
+     */
+    public function addEntityRoute($name, $route, array $mapping, array $parameters = array())
+    {
+        $this->entityActions[] = array(
+            'router'     => true,
+            'name'       => $name,
+            'route'      => $route,
+            'mapping'    => $mapping,
+            'parameters' => $parameters,
         );
 
         return $this;
@@ -114,9 +160,15 @@ class Actions
         $actions = array();
 
         foreach ($this->entityActions as $action) {
-            $actions[] = array(
-                'name' => $action['name'],
-                'url'  => $this->resolveEntityUrl($action['pattern'], $entity),
+            $actions[] = $action['router'] ? array(
+                'router'     => true,
+                'name'       => $action['name'],
+                'route'      => $action['route'],
+                'parameters' => $this->resolveEntityParameters($action['mapping'], $entity),
+            ) : array(
+                'router' => false,
+                'name'   => $action['name'],
+                'url'    => $this->resolveEntityUrl($action['pattern'], $entity),
             );
         }
 
@@ -124,6 +176,27 @@ class Actions
     }
 
     /**
+     * Builds route parameters with entity properties value using mapping.
+     *
+     * @param array  $mapping
+     * @param Entity $entity
+     *
+     * @return array
+     */
+    private function resolveEntityParameters(array $mapping, Entity $entity)
+    {
+        $parameters = array();
+
+        foreach ($mapping as $parameter => $property) {
+            $parameters[$parameter] = $entity->get($property);
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Substitute URL placeholders with entity properties value.
+     *
      * @param string $pattern
      * @param Entity $entity
      *
