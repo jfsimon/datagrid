@@ -86,8 +86,9 @@ class Factory implements FactoryInterface
 
         // schema building
         $schema = null;
+        $entity = $collection->getPeek();
         foreach ($extensions as $extension) {
-            $schema = $extension->guessSchema($collection->getPeek(), $options);
+            $schema = $extension->guessSchema($entity, $options);
             if (null !== $schema) {
                 break;
             }
