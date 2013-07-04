@@ -32,7 +32,7 @@ interface ExtensionInterface
      *
      * @return Schema|null
      */
-    public function guessSchema(Entity $entity, array $options);
+    public function guessSchema(Entity $entity = null, array $options);
 
     /**
      * Builds columns schema.

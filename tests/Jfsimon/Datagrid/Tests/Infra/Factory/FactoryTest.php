@@ -40,4 +40,19 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Jfsimon\Datagrid\Exception\ConfigurationException');
         $factory->createGrid(new Collection(array(array())));
     }
+
+    public function testCreateGridWithEmptyCollection()
+    {
+        $factory = new Factory();
+
+        $collection = $this->getMock('Jfsimon\Datagrid\Model\Data\Collection', array(), array(), '', false);
+        $collection->expects($this->once())->method('getPeek')->will($this->returnValue(null));
+
+        $schema = $this->getMock('Jfsimon\Datagrid\Model\Schema');
+
+        $this->assertInstanceOf(
+            'Jfsimon\Datagrid\Model\Component\Grid',
+            $factory->createGrid($collection, array('schema' => $schema))
+        );
+    }
 }

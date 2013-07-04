@@ -25,7 +25,7 @@ abstract class AbstractExtension implements ExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function guessSchema(Entity $entity, array $options)
+    public function guessSchema(Entity $entity = null, array $options)
     {
         return null;
     }

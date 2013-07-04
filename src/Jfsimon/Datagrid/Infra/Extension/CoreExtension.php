@@ -30,7 +30,7 @@ class CoreExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function guessSchema(Entity $entity, array $options)
+    public function guessSchema(Entity $entity = null, array $options)
     {
         return isset($options['schema']) ? $options['schema'] : null;
     }
